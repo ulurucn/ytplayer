@@ -103,6 +103,7 @@ public class YoutubeActivity extends Activity implements IYTJSListener {
 		add("dmLSM9zM0ME");
 		add("M7lc1UVf-VE");
 		add("H6SShCF58-U");
+		add("3tmd-ClpJxA");
 	}};
 
 	public void load(View view) {
@@ -138,6 +139,10 @@ public class YoutubeActivity extends Activity implements IYTJSListener {
 
 	public void gotoListActivity(View view) {
 		startActivity(new Intent(this, YoutubeListActivity.class));
+	}
+
+	public void gotoSettingActivity(View view) {
+		startActivity(new Intent(this, YoutubeSettingActivity.class));
 	}
 
 	@Override

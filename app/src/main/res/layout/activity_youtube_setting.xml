@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".YoutubeListActivity" >
+    tools:context=".YoutubeSettingActivity" >
 
     <WebView
         android:id="@+id/webView"
@@ -31,55 +31,19 @@
             android:text="Load" />
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/mute"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Cue List"
-            android:onClick="cueList" />
+            android:onClick="mute"
+            android:text="mute" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Load List"
-            android:onClick="loadList" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Next"
-            android:onClick="nextVideo" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="prev"
-            android:onClick="previousVideo" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="play first"
-            android:onClick="playVideoAt" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="loop"
-            android:onClick="loop" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="shuffle"
-            android:onClick="shuffle" />
-
+            android:onClick="volume"
+            android:text="volume-50" />
     </LinearLayout>
 
     <SeekBar

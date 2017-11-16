@@ -26,5 +26,10 @@
             android:name=".YoutubeListActivity"
             android:screenOrientation="landscape">
         </activity>
+
+        <activity
+            android:name=".YoutubeSettingActivity"
+            android:screenOrientation="landscape">
+        </activity>
     </application>
 </manifest>

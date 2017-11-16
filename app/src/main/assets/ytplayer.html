@@ -41,8 +41,9 @@
 		// The API will call this function when the video player is ready.
 		function onPlayerReady(event) {
 			console.log("onPlayerReady------------>");
+			//event.target.setVolume(100);
 			//event.target.playVideo();
-			
+
 			setTotalVideoDuration();
 		}
 
@@ -165,6 +166,33 @@
 		function playVideoAt(index) {
 			console.log("playVideoAt------------>index = " + index);
 			player.playVideoAt(index);
+		}
+
+		function setLoop(loop) {
+			console.log("setLoop------------>loop = " + loop);
+			player.setLoop(loop);
+		}
+
+		function setShuffle(shuffle) {
+			console.log("setShuffle------------>shuffle = " + shuffle);
+			player.setShuffle(shuffle);
+		}
+
+		// player setting
+
+		function mute() {
+			if(player.isMuted()) {
+				console.log("mute------------>unMute");
+				player.unMute();
+			} else {
+				console.log("mute------------>mute");
+				player.mute();
+			}
+		}
+
+		function setVolume(volume) {
+			console.log("setVolume------------>volume = " + volume);
+			player.setVolume();
 		}
 
 

@@ -2,6 +2,7 @@ package vip.frendy.ytdemo;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 
 import vip.frendy.ytdemo.interfaces.IYTJSListener;
 
-public class YoutubeListActivity extends Activity implements IYTJSListener {
+public class YoutubeSettingActivity extends Activity implements IYTJSListener {
 
 	String TAG = "YoutubeActivity";
 	WebView webView;
@@ -28,7 +29,7 @@ public class YoutubeListActivity extends Activity implements IYTJSListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_youtube_list);
+		setContentView(R.layout.activity_youtube_setting);
 		
 		seekBar = (SeekBar) this.findViewById(R.id.seekBar1);
 		seekBar.setMax(MAX);
@@ -69,7 +70,7 @@ public class YoutubeListActivity extends Activity implements IYTJSListener {
 		webView.addJavascriptInterface(new YTJSInterface(this), "android");
 		webView.loadUrl("file:///android_asset/ytplayer.html");
 	}
-	
+
 	private void changeSlider(float time){
 		float progress =  (time/totalVideoDuration) * 1000;
 		final double d = Math.ceil(progress);
@@ -109,38 +110,18 @@ public class YoutubeListActivity extends Activity implements IYTJSListener {
 		webView.loadUrl("javascript:loadVideo('" + id + "')");
 	}
 
-	public void cueList(View view) {
-		String list = mVideoIds.toString();
-		list = list.substring(1, list.length()-1);
-		webView.loadUrl("javascript:cuePlaylist('" + list + "')");
+	public void mute(View view) {
+		webView.loadUrl("javascript:mute()");
 	}
 
-	public void loadList(View view) {
-		String list = mVideoIds.toString();
-		list = list.substring(1, list.length()-1);
-		webView.loadUrl("javascript:loadPlaylist('" + list + "')");
+	public void volume(View view) {
+		setVolume(50);
+	}
+	public void setVolume(int volume) {
+		webView.loadUrl("javascript:setVolume(" + volume + ")");
 	}
 
-	public void nextVideo(View view) {
-		webView.loadUrl("javascript:nextVideo()");
-	}
 
-	public void previousVideo(View view) {
-		webView.loadUrl("javascript:previousVideo()");
-	}
-
-	public void playVideoAt(View view) {
-		int index = 0;
-		webView.loadUrl("javascript:playVideoAt(" + index + ")");
-	}
-
-	public void loop(View view) {
-		webView.loadUrl("javascript:setLoop(" + true + ")");
-	}
-
-	public void shuffle(View view) {
-		webView.loadUrl("javascript:setShuffle(" + true + ")");
-	}
 
 	@Override
 	public void setVideoDuration(String duration) {
