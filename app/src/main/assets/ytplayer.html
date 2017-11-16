@@ -9,9 +9,82 @@
 		var player;
 		var pVars;
 		
+		function onYouTubeIframeAPIReady() {
+			console.log("onYouTubeIframeAPIReady------------>");
+
+			player = new YT.Player('player', {
+				videoId : vID,
+				playerVars : pVars,
+				events : {
+					'onReady' : onPlayerReady,
+					'onStateChange' : onPlayerStateChange,
+					'onPlaybackQualityChange' : onPlayerPlaybackQualityChange,
+					'onError' : onPlayerError
+				}
+			});
+			player.setSize(window.innerWidth, window.innerHeight);
+			
+			// this will transmit playTime frequently while playing
+	        function getCurrentTime() {
+	             var state = player.getPlayerState();
+	             if (state == YT.PlayerState.PLAYING) {
+	                 time = player.getCurrentTime()
+	                 //window.location.href = 'ytplayer://onPlayTime?data=' + time;
+	                 onPlayTime(time);
+	             }
+	        }
+	        
+	        window.setInterval(getCurrentTime, 1000);
+		}
 		
-		function loadVideoById(vidID) {
-			console.log("loadVideoById------------>vidID = " + vidID);
+
+		// The API will call this function when the video player is ready.
+		function onPlayerReady(event) {
+			console.log("onPlayerReady------------>");
+			//event.target.playVideo();
+			
+			setTotalVideoDuration();
+		}
+
+
+		// The API calls this function when the player's state changes.
+		// The function indicates that when playing a video (state=1),
+		// the player should play for six seconds and then stop.
+		/**
+		onPlayerStateChangeevent.data can be one of the below values
+
+		0 (ended)				    YT.PlayerState.ENDED
+		1 (playing)					YT.PlayerState.PLAYING
+		2 (paused)					YT.PlayerState.PAUSED
+		3 (buffering)				YT.PlayerState.BUFFERING
+		5 (video cued).				YT.PlayerState.CUED
+		 */
+		var done = false;
+		function onPlayerStateChange(event) {
+			console.log("onPlayerStateChange------------>" + event.data);
+			//if (event.data == YT.PlayerState.PLAYING && !done) {
+			//  setTimeout(stopVideo, 6000);
+			//  done = true;
+			//}
+			if(event.data == YT.PlayerState.ENDED){
+				window.android.videoEnd();
+			}
+		}
+
+		function onPlayerPlaybackQualityChange(event) {
+			console.log("onPlayerPlaybackQualityChange------------>" + event.data);
+		}
+
+		function onPlayerError(event) {
+			console.log("onPlayerError------------>" + event.data);
+		}
+
+
+		//
+		// ** Android -> Web
+		//
+		function loadVideo(vidID) {
+			console.log("loadVideo------------>vidID = " + vidID);
 			vID = vidID;
 			var tag = document.createElement('script');
 
@@ -29,82 +102,12 @@
 				width : '100%'
 			};
 		}
-		
 
-		
-		function onYouTubeIframeAPIReady() {
-			console.log("onYouTubeIframeAPIReady------------>");
-			player = new YT.Player('player', {
+		function loadVideoById(vidID) {
+			console.log("loadVideoById------------>vidID = " + vidID);
+			vID = vidID;
 
-				videoId : vID, //'M7lc1UVf-VE',
-				playerVars : pVars,
-				events : {
-					'onReady' : onPlayerReady,
-					'onStateChange' : onPlayerStateChange,
-					'onPlaybackQualityChange' : onPlayerPlaybackQualityChange,
-					'onError' : onPlayerError
-				}
-			});
-			player.setSize(window.innerWidth,window.innerHeight);
-			
-			// this will transmit playTime frequently while playng
-	        function getCurrentTime() {
-	             var state = player.getPlayerState();
-	             if (state == YT.PlayerState.PLAYING) {
-	                 time = player.getCurrentTime()
-	                 //window.location.href = 'ytplayer://onPlayTime?data=' + time;
-	                 onPlayTime(time);
-	             }
-	        }
-	        
-	        window.setInterval(getCurrentTime, 1000);
-		}
-		
-		function setTotalVideoDuration(){
-			//return player.getDuration();
-			window.android.setTotalVideoDuration(player.getDuration());
-		}
-
-		
-		function onPlayTime(time){
-			console.log("onPlayTime------------> time = " + time);
-			window.android.setVideoDuration(time);
-
-		}
-		// 4. The API will call this function when the video player is ready.
-		function onPlayerReady(event) {
-			console.log("onPlayerReady------------>");
-			//event.target.playVideo();
-			
-			setTotalVideoDuration();
-		}
-
-		// 5. The API calls this function when the player's state changes.
-		//    The function indicates that when playing a video (state=1),
-		//    the player should play for six seconds and then stop.
-
-		/**
-		onPlayerStateChangeevent.data can be one of the below values
-
-		0 (ended)				    YT.PlayerState.ENDED
-		1 (playing)					YT.PlayerState.PLAYING
-		2 (paused)					YT.PlayerState.PAUSED
-		3 (buffering)				YT.PlayerState.BUFFERING
-		5 (video cued).				YT.PlayerState.CUED
-
-
-		 */
-
-		var done = false;
-		function onPlayerStateChange(event) {
-			console.log("onPlayerStateChange------------>" + event.data);
-			//if (event.data == YT.PlayerState.PLAYING && !done) {
-			//  setTimeout(stopVideo, 6000);
-			//  done = true;
-			//}
-			if(event.data == YT.PlayerState.ENDED){
-				window.android.videoEnd();
-			}
+			player.loadVideoById(vID, 0);
 		}
 
 		function stopVideo() {
@@ -121,22 +124,25 @@
 			console.log("pauseVideo------------>");
 			player.pauseVideo();
 		}
-		
+
 		function seekVideo(time){
 			console.log("seekVideo------------>time = " + time);
 			player.seekTo(time, true);
 		}
 
-		function onPlayerPlaybackQualityChange(event) {
-			console.log("onPlayerPlaybackQualityChange------------>"
-					+ event.data);
 
+		//
+		// ** Web -> Android
+		//
+		function setTotalVideoDuration(){
+			window.android.setTotalVideoDuration(player.getDuration());
 		}
 
-		function onPlayerError(event) {
-			console.log("onPlayerError------------>" + event.data);
-
+		function onPlayTime(time){
+			console.log("onPlayTime------------> time = " + time);
+			window.android.setVideoDuration(time);
 		}
+
 	</script>
 </body>
 </html>

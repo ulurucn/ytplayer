@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.demo.youtubeinvideoviewdemo.YoutubeActivity" >
+    tools:context=".YoutubeActivity" >
 
     <WebView
         android:id="@+id/webView"
@@ -47,6 +47,26 @@
         android:layout_toRightOf="@+id/button2"
         android:text="Pause"
         android:onClick="pause" />
+
+    <Button
+        android:id="@+id/button4"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/webView"
+        android:layout_toRightOf="@+id/button3"
+        android:text="Stop"
+        android:onClick="stop" />
+
+    <Button
+        android:id="@+id/button5"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/webView"
+        android:layout_toRightOf="@+id/button4"
+        android:text="Next"
+        android:onClick="next" />
 
     <SeekBar
         android:id="@+id/seekBar1"

@@ -13,6 +13,8 @@ import android.webkit.WebViewClient;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
+import java.util.ArrayList;
+
 public class YoutubeActivity extends Activity {
 
 	String TAG = "YoutubeActivity";
@@ -64,7 +66,6 @@ public class YoutubeActivity extends Activity {
 		webView.setWebViewClient(new MyWebviewClient());
 		webView.addJavascriptInterface(new YTJSInterface(this), "android");
 		webView.loadUrl("file:///android_asset/ytplayer.html");
-		//load(getCurrentFocus());
 	}
 	
 	public void changeSlider(float time){
@@ -89,26 +90,40 @@ public class YoutubeActivity extends Activity {
 			}
 		});
 	}
-	
-	public void load(View view){
+
+	private int mIndex = 0;
+	private ArrayList<String> mVideoIds = new ArrayList<String>() {{
 		//dmLSM9zM0ME - 59 secs video
 		//M7lc1UVf-VE - iframe API video
 		//H6SShCF58-U
 		//3tmd-ClpJxA ：被禁止？
-		webView.loadUrl("javascript:loadVideoById('H6SShCF58-U')");
+		add("dmLSM9zM0ME");
+		add("M7lc1UVf-VE");
+		add("H6SShCF58-U");
+	}};
+
+	public void load(View view) {
+		String id = "H6SShCF58-U";
+		webView.loadUrl("javascript:loadVideo('" + id + "')");
+	}
+
+	public void next(View view) {
+		String id = mVideoIds.get((mIndex ++) % mVideoIds.size());
+		webView.loadUrl("javascript:loadVideoById('" + id + "')");
 	}
 	
-	public void play(View view){
+	public void play(View view) {
 		webView.loadUrl("javascript:playVideo()");
 	}
 	
-	public void pause(View view){
+	public void pause(View view) {
 		webView.loadUrl("javascript:pauseVideo()");
 	}
 	
-	public void stop(View view){
+	public void stop(View view) {
 		webView.loadUrl("javascript:stopVideo()");
 	}
+
 	
 	private class MyWebviewClient extends WebViewClient{
 		@Override
