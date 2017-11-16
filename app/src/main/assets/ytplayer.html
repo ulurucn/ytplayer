@@ -93,12 +93,17 @@
 			var firstScriptTag = document.getElementsByTagName('script')[0];
 			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-			pVars = {/*'autohide' : 1, 'autoplay': 1,*/
+			pVars = {
+				enablejsapi : 1,
 				controls : 0,
 				playsinline : 1,
+				iv_load_policy : 3,
+				autoplay : 0,
 				autohide : 1,
 				showinfo : 0,
-				modestbranding : 1,
+				start: 0,
+				rel: 0,
+				modestbranding : 1, // YouTube徽标
 				height : '100%',
 				width : '100%'
 			};
