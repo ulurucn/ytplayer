@@ -15,6 +15,8 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import vip.frendy.ytdemo.interfaces.IYTJSListener;
 
@@ -69,6 +71,10 @@ public class YoutubeActivity extends Activity implements IYTJSListener {
 		webView.setWebViewClient(new MyWebviewClient());
 		webView.addJavascriptInterface(new YTJSInterface(this), "android");
 		webView.loadUrl("file:///android_asset/ytplayer.html");
+
+//		Map<String, String> extraHeaders = new HashMap<>();
+//		extraHeaders.put("Referer", "https://youtube.com");
+//		webView.loadUrl("https://www.youtube.com/embed/3tmd-ClpJxA?autoplay=1", extraHeaders);
 	}
 
 	private void changeSlider(float time){
