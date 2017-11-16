@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".YoutubeActivity" >
+    tools:context=".YoutubeListActivity" >
 
     <WebView
         android:id="@+id/webView"
@@ -31,60 +31,41 @@
             android:text="Load" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/button7"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Play"
-            android:onClick="play" />
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Pause"
-            android:onClick="pause" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Stop"
-            android:onClick="stop" />
+            android:text="Cue List"
+            android:onClick="cueList" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Clear"
-            android:onClick="clear" />
-
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Play Next"
-            android:onClick="playNext" />
-
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Cue Next"
-            android:onClick="cueNext" />
+            android:text="Load List"
+            android:onClick="loadList" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:textColor="@android:color/white"
-            android:text="List Activity"
-            android:onClick="gotoListActivity" />
+            android:text="Next"
+            android:onClick="nextVideo" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="prev"
+            android:onClick="previousVideo" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="play first"
+            android:onClick="playVideoAt" />
+
     </LinearLayout>
 
     <SeekBar

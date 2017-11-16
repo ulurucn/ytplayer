@@ -3,39 +3,34 @@ package vip.frendy.ytdemo;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
+import vip.frendy.ytdemo.interfaces.IYTJSListener;
+
 /**
  * Created by frendy on 2017/11/16.
  */
 class YTJSInterface {
+    String TAG = "YTJSInterface";
 
-    private YoutubeActivity youtubeActivity;
+    private IYTJSListener listener;
 
-    public YTJSInterface(YoutubeActivity youtubeActivity) {
-        this.youtubeActivity = youtubeActivity;
+    public YTJSInterface(IYTJSListener listener) {
+        this.listener = listener;
     }
 
     @JavascriptInterface
     public void setVideoDuration(String duration) {
-        Log.d(youtubeActivity.TAG, "setVideoDuration = " + duration);
-        try {
-            youtubeActivity.changeSlider(Float.parseFloat(duration));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Log.d(TAG, "setVideoDuration = " + duration);
+        listener.setVideoDuration(duration);
     }
 
     @JavascriptInterface
     public void setTotalVideoDuration(String duration) {
-        Log.d(youtubeActivity.TAG, "setTotalVideoDuration = " + duration);
-        try {
-            youtubeActivity.totalVideoDuration = Float.parseFloat(duration);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Log.d(TAG, "setTotalVideoDuration = " + duration);
+        listener.setTotalVideoDuration(duration);
     }
 
     @JavascriptInterface
     public void videoEnd() {
-        youtubeActivity.modifySlider("ENDED");
+        listener.videoEnd();
     }
 }

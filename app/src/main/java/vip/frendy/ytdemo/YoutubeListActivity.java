@@ -2,7 +2,6 @@ package vip.frendy.ytdemo;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 
 import vip.frendy.ytdemo.interfaces.IYTJSListener;
 
-public class YoutubeActivity extends Activity implements IYTJSListener {
+public class YoutubeListActivity extends Activity implements IYTJSListener {
 
 	String TAG = "YoutubeActivity";
 	WebView webView;
@@ -29,7 +28,7 @@ public class YoutubeActivity extends Activity implements IYTJSListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_youtube);
+		setContentView(R.layout.activity_youtube_list);
 		
 		seekBar = (SeekBar) this.findViewById(R.id.seekBar1);
 		seekBar.setMax(MAX);
@@ -70,7 +69,7 @@ public class YoutubeActivity extends Activity implements IYTJSListener {
 		webView.addJavascriptInterface(new YTJSInterface(this), "android");
 		webView.loadUrl("file:///android_asset/ytplayer.html");
 	}
-
+	
 	private void changeSlider(float time){
 		float progress =  (time/totalVideoDuration) * 1000;
 		final double d = Math.ceil(progress);
@@ -110,34 +109,29 @@ public class YoutubeActivity extends Activity implements IYTJSListener {
 		webView.loadUrl("javascript:loadVideo('" + id + "')");
 	}
 
-	public void playNext(View view) {
-		String id = mVideoIds.get((mIndex ++) % mVideoIds.size());
-		webView.loadUrl("javascript:loadVideoById('" + id + "')");
+	public void cueList(View view) {
+		String list = mVideoIds.toString();
+		list = list.substring(1, list.length()-1);
+		webView.loadUrl("javascript:cuePlaylist('" + list + "')");
 	}
 
-	public void cueNext(View view) {
-		String id = mVideoIds.get((mIndex ++) % mVideoIds.size());
-		webView.loadUrl("javascript:cueVideoById('" + id + "')");
+	public void loadList(View view) {
+		String list = mVideoIds.toString();
+		list = list.substring(1, list.length()-1);
+		webView.loadUrl("javascript:loadPlaylist('" + list + "')");
 	}
 
-	public void play(View view) {
-		webView.loadUrl("javascript:playVideo()");
-	}
-	
-	public void pause(View view) {
-		webView.loadUrl("javascript:pauseVideo()");
-	}
-	
-	public void stop(View view) {
-		webView.loadUrl("javascript:stopVideo()");
+	public void nextVideo(View view) {
+		webView.loadUrl("javascript:nextVideo()");
 	}
 
-	public void clear(View view) {
-		webView.loadUrl("javascript:clearVideo()");
+	public void previousVideo(View view) {
+		webView.loadUrl("javascript:previousVideo()");
 	}
 
-	public void gotoListActivity(View view) {
-		startActivity(new Intent(this, YoutubeListActivity.class));
+	public void playVideoAt(View view) {
+		int index = 0;
+		webView.loadUrl("javascript:playVideoAt(" + index + ")");
 	}
 
 	@Override

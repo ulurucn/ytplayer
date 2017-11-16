@@ -106,13 +106,23 @@
 		function loadVideoById(vidID) {
 			console.log("loadVideoById------------>vidID = " + vidID);
 			vID = vidID;
-
 			player.loadVideoById(vID, 0);
+		}
+
+		function cueVideoById(vidID) {
+			console.log("cueVideoById------------>vidID = " + vidID);
+			vID = vidID;
+			player.cueVideoById(vID, 0);
 		}
 
 		function stopVideo() {
 			console.log("stopVideo------------>");
 			player.stopVideo();
+		}
+
+		function clearVideo() {
+			console.log("clearVideo------------>");
+			player.clearVideo();
 		}
 
 		function playVideo() {
@@ -128,6 +138,33 @@
 		function seekVideo(time){
 			console.log("seekVideo------------>time = " + time);
 			player.seekTo(time, true);
+		}
+
+		// play list
+
+		function cuePlaylist(list) {
+			console.log("cuePlaylist------------>list = " + list);
+			player.cuePlaylist(list.split(','), 0, 0);
+		}
+
+		function loadPlaylist(list) {
+			console.log("loadPlaylist------------>list = " + list);
+			player.loadPlaylist(list.split(','), 0, 0);
+		}
+
+		function nextVideo() {
+			console.log("nextVideo------------>");
+			player.nextVideo();
+		}
+
+		function previousVideo() {
+			console.log("previousVideo------------>");
+			player.previousVideo();
+		}
+
+		function playVideoAt(index) {
+			console.log("playVideoAt------------>index = " + index);
+			player.playVideoAt(index);
 		}
 
 
