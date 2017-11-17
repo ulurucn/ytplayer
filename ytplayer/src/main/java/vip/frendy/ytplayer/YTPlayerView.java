@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
+import java.util.ArrayList;
+
 import vip.frendy.ytplayer.extension.HandlerExt;
 import vip.frendy.ytplayer.interfaces.IYTJSListener;
 
@@ -29,7 +31,11 @@ public class YTPlayerView extends LinearLayout implements IYTJSListener, View.On
     private float totalVideoDuration;
 
     private YTWebView mWebView;
+    //播放单个视频
     private String mVideoId;
+    //播放列表
+    private ArrayList<String> mVideoList = new ArrayList<>();
+    private int mIndex = 0;
 
     public YTPlayerView(Context context) {
         super(context);
@@ -95,6 +101,12 @@ public class YTPlayerView extends LinearLayout implements IYTJSListener, View.On
 
     public void setVideoId(String id) {
         mVideoId = id;
+    }
+
+    public void setVideoList(ArrayList<String> list) {
+        mVideoList.clear();
+        mVideoList.addAll(list);
+        mIndex = 0;
     }
 
 
@@ -175,7 +187,20 @@ public class YTPlayerView extends LinearLayout implements IYTJSListener, View.On
     public void onClick(View view) {
         if(view.getId() == R.id.load && mVideoId != null) {
             mWebView.loadDefault(mVideoId);
+        } else if(view.getId() == R.id.play) {
+            mWebView.playVideo();
+        } else if(view.getId() == R.id.pause) {
+            mWebView.pauseVideo();
+        } else if(view.getId() == R.id.stop) {
+            mWebView.stopVideo();
+        } else if(view.getId() == R.id.clear) {
+            mWebView.clearVideo();
+        } else if(view.getId() == R.id.play_next && mVideoList.size() > 0) {
+            String id = mVideoList.get((mIndex ++) % mVideoList.size());
+            mWebView.loadVideoById(id);
+        } else if(view.getId() == R.id.cue_next && mVideoList.size() > 0) {
+            String id = mVideoList.get((mIndex ++) % mVideoList.size());
+            mWebView.cueVideoById(id);
         }
-
     }
 }
