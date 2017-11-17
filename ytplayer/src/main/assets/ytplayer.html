@@ -43,12 +43,14 @@
 	             var state = player.getPlayerState();
 	             if (state == YT.PlayerState.PLAYING) {
 	                 time = player.getCurrentTime()
-	                 //window.location.href = 'ytplayer://onPlayTime?data=' + time;
-	                 onPlayTime(time);
+	                 onVideoDuration(time);
 	             }
 	        }
 	        
 	        window.setInterval(getCurrentTime, 1000);
+
+	        // android callback
+	        window.android.onYouTubeIframeAPIReady();
 		}
 		
 
@@ -58,7 +60,7 @@
 			//event.target.setVolume(100);
 			//event.target.playVideo();
 
-			setTotalVideoDuration();
+			updateTotalVideoDuration();
 		}
 
 
@@ -82,7 +84,7 @@
 			//  done = true;
 			//}
 			if(event.data == YT.PlayerState.ENDED){
-				window.android.videoEnd();
+				window.android.onVideoEnd();
 			}
 		}
 
@@ -98,6 +100,7 @@
 		//
 		// ** Android -> Web
 		//
+
 		function loadVideo(vidID) {
 			console.log("loadVideo------------>vidID = " + vidID);
 			vID = vidID;
@@ -108,15 +111,15 @@
 			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 			pVars = {
-				enablejsapi : 1,
+				//enablejsapi : 1,
 				controls : 0,
 				playsinline : 1,
-				iv_load_policy : 3,
-				autoplay : 0,
+				//iv_load_policy : 3,
+				//autoplay : 0,
 				autohide : 1,
 				showinfo : 0,
-				start: 0,
-				rel: 0,
+				//start: 0,
+				//rel: 0,
 				modestbranding : 1, // YouTube徽标
 				height : '100%',
 				width : '100%'
@@ -218,13 +221,14 @@
 		//
 		// ** Web -> Android
 		//
-		function setTotalVideoDuration(){
-			window.android.setTotalVideoDuration(player.getDuration());
+
+		function updateTotalVideoDuration(){
+			window.android.updateTotalVideoDuration(player.getDuration());
 		}
 
-		function onPlayTime(time){
-			console.log("onPlayTime------------> time = " + time);
-			window.android.setVideoDuration(time);
+		function onVideoDuration(time){
+			console.log("onVideoDuration------------> time = " + time);
+			window.android.updateVideoDuration(time);
 		}
 
 	</script>

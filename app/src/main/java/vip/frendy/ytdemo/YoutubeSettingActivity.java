@@ -2,7 +2,6 @@ package vip.frendy.ytdemo;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,12 +15,14 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import java.util.ArrayList;
 
-import vip.frendy.ytdemo.interfaces.IYTJSListener;
+import vip.frendy.ytplayer.YTJSInterface;
+import vip.frendy.ytplayer.YTWebView;
+import vip.frendy.ytplayer.interfaces.IYTJSListener;
 
 public class YoutubeSettingActivity extends Activity implements IYTJSListener {
 
 	String TAG = "YoutubeActivity";
-	WebView webView;
+	YTWebView webView;
 	SeekBar seekBar;
 	float totalVideoDuration;
 	final static int MAX = 1000;
@@ -60,15 +61,8 @@ public class YoutubeSettingActivity extends Activity implements IYTJSListener {
 
 	@SuppressLint("JavascriptInterface")
 	private void loadVideo(){
-		webView = (WebView) this.findViewById(R.id.webView);
-		
-		WebSettings settings = webView.getSettings();
-		settings.setJavaScriptEnabled(true);
-
-		webView.setWebChromeClient(new MyChromwClient());
-		webView.setWebViewClient(new MyWebviewClient());
-		webView.addJavascriptInterface(new YTJSInterface(this), "android");
-		webView.loadUrl("file:///android_asset/ytplayer.html");
+		webView = (YTWebView) this.findViewById(R.id.webView);
+		webView.init(this);
 	}
 
 	private void changeSlider(float time){
@@ -107,24 +101,25 @@ public class YoutubeSettingActivity extends Activity implements IYTJSListener {
 
 	public void load(View view) {
 		String id = "H6SShCF58-U";
-		webView.loadUrl("javascript:loadVideo('" + id + "')");
+		webView.loadDefault(id);
 	}
 
 	public void mute(View view) {
-		webView.loadUrl("javascript:mute()");
+		webView.mute();
 	}
 
 	public void volume(View view) {
-		setVolume(50);
+		webView.setVolume(50);
 	}
-	public void setVolume(int volume) {
-		webView.loadUrl("javascript:setVolume(" + volume + ")");
-	}
-
 
 
 	@Override
-	public void setVideoDuration(String duration) {
+	public void onYouTubeIframeAPIReady() {
+
+	}
+
+	@Override
+	public void updateVideoDuration(String duration) {
 		try {
 			changeSlider(Float.parseFloat(duration));
 		} catch (Exception e) {
@@ -133,7 +128,7 @@ public class YoutubeSettingActivity extends Activity implements IYTJSListener {
 	}
 
 	@Override
-	public void setTotalVideoDuration(String duration) {
+	public void updateTotalVideoDuration(String duration) {
 		try {
 			totalVideoDuration = Float.parseFloat(duration);
 		} catch (Exception e) {
@@ -142,31 +137,8 @@ public class YoutubeSettingActivity extends Activity implements IYTJSListener {
 	}
 
 	@Override
-	public void videoEnd() {
+	public void onVideoEnd() {
 		modifySlider("ENDED");
 	}
-
-	private class MyWebviewClient extends WebViewClient{
-		@Override
-		public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-			super.onReceivedError(view, errorCode, description, failingUrl);
-			Log.d(TAG, "onReceivedError : description = " + description);
-		}
-		
-		@Override
-		public boolean shouldOverrideUrlLoading(WebView view, String url) {
-			Log.d(TAG, "shouldOverrideUrlLoading : url = " + url);
-			return true;
-		}
-	}
-	
-	private class MyChromwClient extends WebChromeClient{
-		@Override
-		public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-			Log.d(TAG, "consoleMessage : " + consoleMessage.message());
-			return super.onConsoleMessage(consoleMessage);
-		}
-	}
-
 
 }

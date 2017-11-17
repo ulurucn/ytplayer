@@ -1,39 +1,23 @@
 package vip.frendy.ytdemo;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
-import android.webkit.ConsoleMessage;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import vip.frendy.ytdemo.interfaces.IYTJSListener;
+import vip.frendy.ytplayer.YTWebView;
+import vip.frendy.ytplayer.interfaces.IYTJSListener;
 
 public class YoutubeActivity extends Activity implements IYTJSListener {
 
 	String TAG = "YoutubeActivity";
-	WebView webView;
+	YTWebView webView;
 	SeekBar seekBar;
 	float totalVideoDuration;
 	final static int MAX = 1000;
@@ -70,17 +54,9 @@ public class YoutubeActivity extends Activity implements IYTJSListener {
 		loadVideo();
 	}
 
-	@SuppressLint("JavascriptInterface")
 	private void loadVideo(){
-		webView = (WebView) this.findViewById(R.id.webView);
-		
-		WebSettings settings = webView.getSettings();
-		settings.setJavaScriptEnabled(true);
-
-		webView.setWebChromeClient(new MyChromwClient());
-		webView.setWebViewClient(new MyWebviewClient());
-		webView.addJavascriptInterface(new YTJSInterface(this), "android");
-		webView.loadUrl("file:///android_asset/ytplayer.html");
+		webView = (YTWebView) this.findViewById(R.id.webView);
+		webView.init(this);
 
 //		Map<String, String> extraHeaders = new HashMap<>();
 //		extraHeaders.put("Referer", "https://youtube.com");
@@ -124,33 +100,33 @@ public class YoutubeActivity extends Activity implements IYTJSListener {
 
 	public void load(View view) {
 		String id = "H6SShCF58-U";
-		webView.loadUrl("javascript:loadVideo('" + id + "')");
+		webView.loadDefault(id);
 	}
 
 	public void playNext(View view) {
 		String id = mVideoIds.get((mIndex ++) % mVideoIds.size());
-		webView.loadUrl("javascript:loadVideoById('" + id + "')");
+		webView.loadVideoById(id);
 	}
 
 	public void cueNext(View view) {
 		String id = mVideoIds.get((mIndex ++) % mVideoIds.size());
-		webView.loadUrl("javascript:cueVideoById('" + id + "')");
+		webView.cueVideoById(id);
 	}
 
 	public void play(View view) {
-		webView.loadUrl("javascript:playVideo()");
+		webView.playVideo();
 	}
 	
 	public void pause(View view) {
-		webView.loadUrl("javascript:pauseVideo()");
+		webView.pauseVideo();
 	}
 	
 	public void stop(View view) {
-		webView.loadUrl("javascript:stopVideo()");
+		webView.stopVideo();
 	}
 
 	public void clear(View view) {
-		webView.loadUrl("javascript:clearVideo()");
+		webView.clearVideo();
 	}
 
 	public void gotoListActivity(View view) {
@@ -161,8 +137,14 @@ public class YoutubeActivity extends Activity implements IYTJSListener {
 		startActivity(new Intent(this, YoutubeSettingActivity.class));
 	}
 
+
 	@Override
-	public void setVideoDuration(String duration) {
+	public void onYouTubeIframeAPIReady() {
+
+	}
+
+	@Override
+	public void updateVideoDuration(String duration) {
 		try {
 			changeSlider(Float.parseFloat(duration));
 		} catch (Exception e) {
@@ -171,7 +153,7 @@ public class YoutubeActivity extends Activity implements IYTJSListener {
 	}
 
 	@Override
-	public void setTotalVideoDuration(String duration) {
+	public void updateTotalVideoDuration(String duration) {
 		try {
 			totalVideoDuration = Float.parseFloat(duration);
 		} catch (Exception e) {
@@ -180,82 +162,8 @@ public class YoutubeActivity extends Activity implements IYTJSListener {
 	}
 
 	@Override
-	public void videoEnd() {
+	public void onVideoEnd() {
 		modifySlider("ENDED");
 	}
-
-	private class MyWebviewClient extends WebViewClient{
-		@Override
-		public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-			super.onReceivedError(view, errorCode, description, failingUrl);
-			Log.d(TAG, "onReceivedError : description = " + description);
-		}
-		
-		@Override
-		public boolean shouldOverrideUrlLoading(WebView view, String url) {
-			Log.d(TAG, "shouldOverrideUrlLoading : url = " + url);
-			return true;
-		}
-
-		@Override
-		public void onLoadResource(WebView view, String url) {
-			super.onLoadResource(view, url);
-		}
-
-		@SuppressWarnings("deprecation")
-		@Override
-		public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-			if(url.contains("https://www.youtube.com/")) {
-				return getNewResponse(url, new HashMap<String, String>());
-			} else {
-				return super.shouldInterceptRequest(view, url);
-			}
-		}
-
-		@TargetApi(Build.VERSION_CODES.LOLLIPOP)
-		@Override
-		public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-			String url = request.getUrl().toString();
-			if(url.contains("https://www.youtube.com/")) {
-				return getNewResponse(url, request.getRequestHeaders());
-			} else {
-				return super.shouldInterceptRequest(view, request);
-			}
-		}
-
-		private WebResourceResponse getNewResponse(String url, Map<String, String> requestHeaders) {
-
-			try {
-				OkHttpClient httpClient = new OkHttpClient();
-
-				Request.Builder builder = new Request.Builder();
-				builder.url(url.trim());
-				builder.addHeader("Referer", "https://youtube.com");
-				for(Map.Entry<String, String> header : requestHeaders.entrySet()) {
-					builder.addHeader(header.getKey(), header.getValue());
-				}
-				Request request = builder.build();
-
-				Response response = httpClient.newCall(request).execute();
-
-				return new WebResourceResponse(
-						null,
-						response.header("content-encoding", "utf-8"),
-						response.body().byteStream()
-				);
-			} catch (Exception e) {
-				return null;
-			}
-		}
-	}
-	
-	private class MyChromwClient extends WebChromeClient{
-		@Override
-		public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-			Log.d(TAG, "consoleMessage : " + consoleMessage.message());
-			return super.onConsoleMessage(consoleMessage);
-		}
-	}
-
 
 }
