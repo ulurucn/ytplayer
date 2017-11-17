@@ -1,13 +1,18 @@
 package vip.frendy.ytdemo;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -15,9 +20,14 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import vip.frendy.ytdemo.interfaces.IYTJSListener;
 
 public class YoutubeActivity extends Activity implements IYTJSListener {
@@ -185,6 +195,57 @@ public class YoutubeActivity extends Activity implements IYTJSListener {
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
 			Log.d(TAG, "shouldOverrideUrlLoading : url = " + url);
 			return true;
+		}
+
+		@Override
+		public void onLoadResource(WebView view, String url) {
+			super.onLoadResource(view, url);
+		}
+
+		@SuppressWarnings("deprecation")
+		@Override
+		public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+			if(url.contains("https://www.youtube.com/")) {
+				return getNewResponse(url, new HashMap<String, String>());
+			} else {
+				return super.shouldInterceptRequest(view, url);
+			}
+		}
+
+		@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+		@Override
+		public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+			String url = request.getUrl().toString();
+			if(url.contains("https://www.youtube.com/")) {
+				return getNewResponse(url, request.getRequestHeaders());
+			} else {
+				return super.shouldInterceptRequest(view, request);
+			}
+		}
+
+		private WebResourceResponse getNewResponse(String url, Map<String, String> requestHeaders) {
+
+			try {
+				OkHttpClient httpClient = new OkHttpClient();
+
+				Request.Builder builder = new Request.Builder();
+				builder.url(url.trim());
+				builder.addHeader("Referer", "https://youtube.com");
+				for(Map.Entry<String, String> header : requestHeaders.entrySet()) {
+					builder.addHeader(header.getKey(), header.getValue());
+				}
+				Request request = builder.build();
+
+				Response response = httpClient.newCall(request).execute();
+
+				return new WebResourceResponse(
+						null,
+						response.header("content-encoding", "utf-8"),
+						response.body().byteStream()
+				);
+			} catch (Exception e) {
+				return null;
+			}
 		}
 	}
 	
