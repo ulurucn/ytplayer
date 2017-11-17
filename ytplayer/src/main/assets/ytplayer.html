@@ -76,15 +76,19 @@
 		3 (buffering)				YT.PlayerState.BUFFERING
 		5 (video cued).				YT.PlayerState.CUED
 		 */
-		var done = false;
 		function onPlayerStateChange(event) {
 			console.log("onPlayerStateChange------------>" + event.data);
-			//if (event.data == YT.PlayerState.PLAYING && !done) {
-			//  setTimeout(stopVideo, 6000);
-			//  done = true;
-			//}
+
 			if(event.data == YT.PlayerState.ENDED){
 				window.android.onVideoEnd();
+			} else if(event.data == YT.PlayerState.PLAYING) {
+				window.android.onVideoPlaying();
+			} else if(event.data == YT.PlayerState.PAUSED) {
+				window.android.onVideoPaused();
+			} else if(event.data == YT.PlayerState.BUFFERING) {
+				window.android.onVideoBuffering();
+			} else if(event.data == YT.PlayerState.CUED) {
+				window.android.onVideoCued();
 			}
 		}
 

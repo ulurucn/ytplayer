@@ -1,21 +1,14 @@
 package vip.frendy.ytdemo;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.webkit.ConsoleMessage;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import java.util.ArrayList;
 
-import vip.frendy.ytplayer.YTJSInterface;
 import vip.frendy.ytplayer.YTWebView;
 import vip.frendy.ytplayer.interfaces.IYTJSListener;
 
@@ -59,7 +52,6 @@ public class YoutubeSettingActivity extends Activity implements IYTJSListener {
 		loadVideo();
 	}
 
-	@SuppressLint("JavascriptInterface")
 	private void loadVideo(){
 		webView = (YTWebView) this.findViewById(R.id.webView);
 		webView.init(this);
@@ -139,6 +131,26 @@ public class YoutubeSettingActivity extends Activity implements IYTJSListener {
 	@Override
 	public void onVideoEnd() {
 		modifySlider("ENDED");
+	}
+
+	@Override
+	public void onVideoPlaying() {
+
+	}
+
+	@Override
+	public void onVideoPaused() {
+
+	}
+
+	@Override
+	public void onVideoBuffering() {
+
+	}
+
+	@Override
+	public void onVideoCued() {
+
 	}
 
 }

@@ -1,14 +1,9 @@
 package vip.frendy.ytdemo;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.webkit.ConsoleMessage;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
@@ -162,6 +157,26 @@ public class YoutubeListActivity extends Activity implements IYTJSListener {
 	@Override
 	public void onVideoEnd() {
 		modifySlider("ENDED");
+	}
+
+	@Override
+	public void onVideoPlaying() {
+
+	}
+
+	@Override
+	public void onVideoPaused() {
+
+	}
+
+	@Override
+	public void onVideoBuffering() {
+
+	}
+
+	@Override
+	public void onVideoCued() {
+
 	}
 
 }

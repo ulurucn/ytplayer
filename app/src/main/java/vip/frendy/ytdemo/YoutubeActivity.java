@@ -1,6 +1,5 @@
 package vip.frendy.ytdemo;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -167,7 +166,29 @@ public class YoutubeActivity extends Activity implements IYTJSListener {
 
 	@Override
 	public void onVideoEnd() {
+		Log.i(TAG, "** onVideoEnd");
+
 		modifySlider("ENDED");
+	}
+
+	@Override
+	public void onVideoPlaying() {
+		Log.i(TAG, "** onVideoPlaying");
+	}
+
+	@Override
+	public void onVideoPaused() {
+		Log.i(TAG, "** onVideoPaused");
+	}
+
+	@Override
+	public void onVideoBuffering() {
+		Log.i(TAG, "** onVideoBuffering");
+	}
+
+	@Override
+	public void onVideoCued() {
+		Log.i(TAG, "** onVideoCued");
 	}
 
 }

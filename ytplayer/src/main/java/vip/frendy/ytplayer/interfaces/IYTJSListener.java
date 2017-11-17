@@ -5,9 +5,20 @@ package vip.frendy.ytplayer.interfaces;
  */
 
 public interface IYTJSListener {
+
     void onYouTubeIframeAPIReady();
 
     void updateVideoDuration(String duration);
+
     void updateTotalVideoDuration(String duration);
+
     void onVideoEnd();
+
+    void onVideoPlaying();
+
+    void onVideoPaused();
+
+    void onVideoBuffering();
+
+    void onVideoCued();
 }

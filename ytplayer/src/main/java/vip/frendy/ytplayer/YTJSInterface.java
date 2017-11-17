@@ -35,4 +35,24 @@ public class YTJSInterface {
     public void onVideoEnd() {
         listener.onVideoEnd();
     }
+
+    @JavascriptInterface
+    public void onVideoPlaying() {
+        listener.onVideoPlaying();
+    }
+
+    @JavascriptInterface
+    public void onVideoPaused() {
+        listener.onVideoPaused();
+    }
+
+    @JavascriptInterface
+    public void onVideoBuffering() {
+        listener.onVideoBuffering();
+    }
+
+    @JavascriptInterface
+    public void onVideoCued() {
+        listener.onVideoCued();
+    }
 }

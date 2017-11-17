@@ -126,6 +126,26 @@ public class YTPlayerView extends LinearLayout implements IYTJSListener, View.On
         setSeekBar("ENDED");
     }
 
+    @Override
+    public void onVideoPlaying() {
+
+    }
+
+    @Override
+    public void onVideoPaused() {
+
+    }
+
+    @Override
+    public void onVideoBuffering() {
+
+    }
+
+    @Override
+    public void onVideoCued() {
+
+    }
+
 
     private void changeSeekBar(float time){
         float progress =  (time/totalVideoDuration) * 1000;
