@@ -1,14 +1,14 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".YoutubeListActivity" >
+    android:layout_height="match_parent">
 
     <vip.frendy.ytplayer.YTWebView
-        android:id="@+id/webView"
+        android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/seekBar1"
+        android:layout_above="@+id/seek_bar"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/buttonLayout"
         android:layout_centerInParent="true" />
@@ -19,71 +19,61 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/load"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="load"
             android:text="Load" />
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/play"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Cue List"
-            android:onClick="cueList" />
+            android:text="Play" />
 
         <Button
+            android:id="@+id/pause"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Load List"
-            android:onClick="loadList" />
+            android:text="Pause" />
 
         <Button
+            android:id="@+id/stop"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Next"
-            android:onClick="nextVideo" />
+            android:text="Stop" />
 
         <Button
+            android:id="@+id/clear"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="prev"
-            android:onClick="previousVideo" />
+            android:text="Clear" />
 
         <Button
+            android:id="@+id/play_next"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="play first"
-            android:onClick="playVideoAt" />
+            android:text="Play Next" />
 
         <Button
+            android:id="@+id/cue_next"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="loop"
-            android:onClick="loop" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="shuffle"
-            android:onClick="shuffle" />
-
+            android:text="Cue Next" />
     </LinearLayout>
 
     <SeekBar
-        android:id="@+id/seekBar1"
+        android:id="@+id/seek_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/webView" />
+        android:layout_alignRight="@+id/web_view" />
 
 </RelativeLayout>

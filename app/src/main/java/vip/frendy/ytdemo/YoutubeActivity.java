@@ -137,6 +137,10 @@ public class YoutubeActivity extends Activity implements IYTJSListener {
 		startActivity(new Intent(this, YoutubeSettingActivity.class));
 	}
 
+	public void gotoPlayerActivity(View view) {
+		startActivity(new Intent(this, YoutubePlayerActivity.class));
+	}
+
 
 	@Override
 	public void onYouTubeIframeAPIReady() {
