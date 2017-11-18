@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="load"
+            android:textSize="10sp"
             android:text="Load" />
 
         <Button
@@ -32,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Cue List"
+            android:textSize="10sp"
             android:onClick="cueList" />
 
         <Button
@@ -39,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Load List"
+            android:textSize="10sp"
             android:onClick="loadList" />
 
         <Button
@@ -46,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Next"
+            android:textSize="10sp"
             android:onClick="nextVideo" />
 
         <Button
@@ -53,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="prev"
+            android:textSize="10sp"
             android:onClick="previousVideo" />
 
         <Button
@@ -60,6 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="play first"
+            android:textSize="9sp"
             android:onClick="playVideoAt" />
 
         <Button
@@ -67,6 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="loop"
+            android:textSize="10sp"
             android:onClick="loop" />
 
         <Button
@@ -74,6 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="shuffle"
+            android:textSize="10sp"
             android:onClick="shuffle" />
 
     </LinearLayout>

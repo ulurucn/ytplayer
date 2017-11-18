@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="load"
+            android:textSize="10sp"
             android:text="Load" />
 
         <Button
@@ -32,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="mute"
+            android:textSize="10sp"
             android:text="mute" />
 
         <Button
@@ -39,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="volume"
+            android:textSize="10sp"
             android:text="volume-50" />
     </LinearLayout>
 

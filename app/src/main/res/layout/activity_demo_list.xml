@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="48dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="48dp"
+        android:background="@android:color/darker_gray"/>
+
+    <vip.frendy.tablayout.CommonTabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom"
+        app:tl_iconHeight="20dp"
+        app:tl_iconWidth="20dp"
+        app:tl_indicator_color="@color/colorAccent"
+        app:tl_indicator_height="0dp"
+        app:tl_textSelectColor="@color/colorAccent"
+        app:tl_textUnselectColor="@android:color/darker_gray"
+        app:tl_textsize="11sp"
+        app:tl_underline_color="@color/colorAccent"
+        app:tl_underline_height="0dp"/>
+
+</FrameLayout>

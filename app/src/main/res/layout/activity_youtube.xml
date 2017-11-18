@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="load"
+            android:textSize="10sp"
             android:text="Load" />
 
         <Button
@@ -31,6 +32,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="10sp"
             android:text="Play"
             android:onClick="play" />
 
@@ -39,6 +41,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="9sp"
             android:text="Pause"
             android:onClick="pause" />
 
@@ -47,6 +50,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="10sp"
             android:text="Stop"
             android:onClick="stop" />
 
@@ -54,6 +58,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="9sp"
             android:text="Clear"
             android:onClick="clear" />
 
@@ -62,6 +67,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="10sp"
             android:text="Play Next"
             android:onClick="playNext" />
 
@@ -70,6 +76,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="10sp"
             android:text="Cue Next"
             android:onClick="cueNext" />
 
@@ -79,6 +86,7 @@
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:textColor="@android:color/white"
+            android:textSize="10sp"
             android:text="List"
             android:onClick="gotoListActivity" />
 
@@ -89,6 +97,7 @@
             android:layout_marginLeft="2dp"
             android:background="@color/colorPrimary"
             android:textColor="@android:color/white"
+            android:textSize="10sp"
             android:text="Setting"
             android:onClick="gotoSettingActivity" />
 
@@ -99,8 +108,20 @@
             android:layout_marginLeft="2dp"
             android:background="@color/colorPrimary"
             android:textColor="@android:color/white"
+            android:textSize="10sp"
             android:text="Player"
             android:onClick="gotoPlayerActivity" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="2dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:textSize="10sp"
+            android:text="Fragment"
+            android:onClick="gotoFragmentActivity" />
     </LinearLayout>
 
     <SeekBar
