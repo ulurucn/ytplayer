@@ -37,12 +37,12 @@ public class YTPlayerView extends LinearLayout implements IYTJSListener, View.On
     private SeekBar mSeekBar;
     private float totalVideoDuration;
 
-    private YTWebView mWebView;
+    protected YTWebView mWebView;
     //播放单个视频
     private String mVideoId;
     //播放列表
-    private ArrayList<String> mVideoList = new ArrayList<>();
-    private int mIndex = 0;
+    protected ArrayList<String> mVideoList = new ArrayList<>();
+    protected int mIndex = 0;
 
     public YTPlayerView(Context context) {
         super(context);

@@ -2,5 +2,5 @@
 <resources>
 
     <color name="style_color">#be3431</color><!--主题色-->
-
+    <color name="line">#eeeeee</color>
 </resources>
