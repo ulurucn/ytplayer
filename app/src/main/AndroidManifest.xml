@@ -34,7 +34,7 @@
 
         <activity
             android:name=".YoutubePlayerActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="portrait">
         </activity>
 
         <activity

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
@@ -24,7 +25,12 @@ import static vip.frendy.ytplayer.Contants.DEBUG;
 public class YTPlayerView extends LinearLayout implements IYTJSListener, View.OnClickListener {
     private static String TAG = "YTPlayerView";
 
-    private Button mLoad, mPlay, mPause, mStop, mClear, mPlayNext, mCueNext;
+    private Button mLoad, mStop, mClear, mPlayNext, mCueNext;
+    private ImageButton mPlayPause;
+    private PlayerState mState = PlayerState.ENDED;
+    private enum PlayerState {
+        ENDED, PLAYING, PAUSED, BUFFERING, CUED
+    };
 
     private final static int MAX = 1000;
     private SeekBar mSeekBar;
@@ -57,10 +63,8 @@ public class YTPlayerView extends LinearLayout implements IYTJSListener, View.On
 
         mLoad = findViewById(R.id.load);
         mLoad.setOnClickListener(this);
-        mPlay = findViewById(R.id.play);
-        mPlay.setOnClickListener(this);
-        mPause = findViewById(R.id.pause);
-        mPause.setOnClickListener(this);
+        mPlayPause = findViewById(R.id.play_pause);
+        mPlayPause.setOnClickListener(this);
         mStop = findViewById(R.id.stop);
         mStop.setOnClickListener(this);
         mClear = findViewById(R.id.clear);
@@ -135,27 +139,30 @@ public class YTPlayerView extends LinearLayout implements IYTJSListener, View.On
 
     @Override
     public void onVideoEnd() {
+        mState = PlayerState.ENDED;
         setSeekBar("ENDED");
     }
 
     @Override
     public void onVideoPlaying() {
-
+        mState = PlayerState.PLAYING;
+        updatePlayPuaseButton(mState);
     }
 
     @Override
     public void onVideoPaused() {
-
+        mState = PlayerState.PAUSED;
+        updatePlayPuaseButton(mState);
     }
 
     @Override
     public void onVideoBuffering() {
-
+        mState = PlayerState.BUFFERING;
     }
 
     @Override
     public void onVideoCued() {
-
+        mState = PlayerState.CUED;
     }
 
 
@@ -183,14 +190,26 @@ public class YTPlayerView extends LinearLayout implements IYTJSListener, View.On
         });
     }
 
+    private void updatePlayPuaseButton(PlayerState state) {
+        if(mPlayPause == null) return;
+
+        if(state == PlayerState.PLAYING) {
+            mPlayPause.setImageResource(android.R.drawable.ic_media_pause);
+        } else if(state == PlayerState.PAUSED) {
+            mPlayPause.setImageResource(android.R.drawable.ic_media_play);
+        }
+    }
+
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.load && mVideoId != null) {
             mWebView.loadDefault(mVideoId);
-        } else if(view.getId() == R.id.play) {
-            mWebView.playVideo();
-        } else if(view.getId() == R.id.pause) {
-            mWebView.pauseVideo();
+        } else if(view.getId() == R.id.play_pause) {
+            if(mState == PlayerState.PLAYING || mState == PlayerState.BUFFERING) {
+                mWebView.pauseVideo();
+            } else {
+                mWebView.playVideo();
+            }
         } else if(view.getId() == R.id.stop) {
             mWebView.stopVideo();
         } else if(view.getId() == R.id.clear) {
