@@ -3,6 +3,7 @@ package vip.frendy.ytdemo;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -35,5 +36,16 @@ public class YoutubePlayerActivity extends Activity {
         mPlayerView = findViewById(R.id.player_view);
         mPlayerView.setVideoId("H6SShCF58-U");
         mPlayerView.setVideoList(mVideoIds);
+
+        findViewById(R.id.roll).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mPlayerView.isRollup()) {
+                    mPlayerView.rollout();
+                } else {
+                    mPlayerView.rollup();
+                }
+            }
+        });
     }
 }

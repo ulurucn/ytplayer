@@ -1,7 +1,8 @@
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +24,6 @@
         android:id="@+id/buttonLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         android:orientation="horizontal">
         <Button
             android:id="@+id/load"
@@ -68,4 +68,4 @@
             android:text="Cue Next" />
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

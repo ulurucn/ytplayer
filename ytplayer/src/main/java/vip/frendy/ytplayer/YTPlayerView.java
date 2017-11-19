@@ -25,6 +25,7 @@ import static vip.frendy.ytplayer.Contants.DEBUG;
 public class YTPlayerView extends LinearLayout implements IYTJSListener, View.OnClickListener {
     private static String TAG = "YTPlayerView";
 
+    private LinearLayout mButtonLayout;
     private Button mLoad, mStop, mClear, mPlayNext, mCueNext;
     private ImageButton mPlayPause;
     private PlayerState mState = PlayerState.ENDED;
@@ -61,6 +62,7 @@ public class YTPlayerView extends LinearLayout implements IYTJSListener, View.On
     private void init(Context context) {
         LayoutInflater.from(context).inflate(R.layout.yt_player_view, this);
 
+        mButtonLayout = findViewById(R.id.buttonLayout);
         mLoad = findViewById(R.id.load);
         mLoad.setOnClickListener(this);
         mPlayPause = findViewById(R.id.play_pause);
@@ -111,6 +113,22 @@ public class YTPlayerView extends LinearLayout implements IYTJSListener, View.On
         mVideoList.clear();
         mVideoList.addAll(list);
         mIndex = 0;
+    }
+
+    // 展开
+    public void rollout() {
+        mSeekBar.setVisibility(VISIBLE);
+        mButtonLayout.setVisibility(VISIBLE);
+    }
+
+    // 收起
+    public void rollup() {
+        mSeekBar.setVisibility(GONE);
+        mButtonLayout.setVisibility(GONE);
+    }
+
+    public boolean isRollup() {
+        return mButtonLayout.getVisibility() == GONE;
     }
 
 
