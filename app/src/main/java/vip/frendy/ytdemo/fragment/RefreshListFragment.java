@@ -43,7 +43,7 @@ public abstract class RefreshListFragment extends BaseListFragment {
         mRefreshLayout.setOnRefreshListener(getRefreshListener());
         mRefreshLayout.setOnLoadmoreListener(getLoadMoreListener());
 
-        mRecyclerView.setItemViewSwipeEnabled(false); // 滑动删除，默认关闭。
+        mRecyclerView.setItemViewSwipeEnabled(true); // 滑动删除，默认关闭。
         mRecyclerView.setLongPressDragEnabled(false); // 长按拖拽，默认关闭。
         mRefreshLayout.setEnableRefresh(true);
         mRefreshLayout.setEnableLoadmore(true);

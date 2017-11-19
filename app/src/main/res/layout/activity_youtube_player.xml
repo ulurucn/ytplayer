@@ -5,16 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <vip.frendy.ytplayer.YTPlayerView
+    <vip.frendy.ytplayer.YTPlayerListView
         android:id="@+id/player_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </vip.frendy.ytplayer.YTPlayerView>
+    </vip.frendy.ytplayer.YTPlayerListView>
 
     <Button
         android:id="@+id/roll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
+        android:layout_gravity="bottom"
         android:text="roll"/>
 </FrameLayout>

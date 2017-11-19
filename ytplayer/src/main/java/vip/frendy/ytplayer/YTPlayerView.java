@@ -59,8 +59,13 @@ public class YTPlayerView extends LinearLayout implements IYTJSListener, View.On
         init(context);
     }
 
-    private void init(Context context) {
-        LayoutInflater.from(context).inflate(R.layout.yt_player_view, this);
+    // 继承时可替换布局
+    protected int getLayoutResId() {
+        return R.layout.yt_player_view;
+    }
+
+    protected void init(Context context) {
+        LayoutInflater.from(context).inflate(getLayoutResId(), this);
 
         mButtonLayout = findViewById(R.id.buttonLayout);
         mLoad = findViewById(R.id.load);
