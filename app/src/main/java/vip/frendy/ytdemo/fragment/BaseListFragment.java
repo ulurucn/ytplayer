@@ -55,6 +55,7 @@ public abstract class BaseListFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(mItemDecoration);
+        mRecyclerView.setHasFixedSize(true);
     }
 
     /**
@@ -65,7 +66,9 @@ public abstract class BaseListFragment extends Fragment {
     }
 
     protected RecyclerView.LayoutManager createLayoutManager() {
-        return new LinearLayoutManager(getContext());
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        manager.setSmoothScrollbarEnabled(true);
+        return manager;
     }
 
     protected RecyclerView.ItemDecoration createItemDecoration() {

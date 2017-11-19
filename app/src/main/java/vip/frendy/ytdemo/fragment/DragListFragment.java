@@ -46,7 +46,7 @@ public abstract class DragListFragment extends BaseListFragment {
         mRecyclerView.setItemViewSwipeEnabled(false); // 滑动删除，默认关闭。
         mRecyclerView.setLongPressDragEnabled(true); // 长按拖拽，默认关闭。
         mRefreshLayout.setEnableRefresh(false);
-        mRefreshLayout.setEnableLoadmore(true);
+        mRefreshLayout.setEnableLoadmore(false);
     }
 
     protected abstract SwipeItemClickListener getItemClickListener();
@@ -64,13 +64,13 @@ public abstract class DragListFragment extends BaseListFragment {
             if (actionState == OnItemStateChangedListener.ACTION_STATE_DRAG) {
                 Log.i("", "** 状态：拖拽");
                 // 拖拽的时候背景就透明了，这里我们可以添加一个特殊背景。
-                viewHolder.itemView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white_pressed));
+                //viewHolder.itemView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white_pressed));
             } else if (actionState == OnItemStateChangedListener.ACTION_STATE_SWIPE) {
                 Log.i("", "** 状态：滑动删除");
             } else if (actionState == OnItemStateChangedListener.ACTION_STATE_IDLE) {
                 Log.i("", "** 状态：手指松开");
                 // 在手松开的时候还原背景。
-                ViewCompat.setBackground(viewHolder.itemView, ContextCompat.getDrawable(getContext(), R.drawable.select_white));
+                //ViewCompat.setBackground(viewHolder.itemView, ContextCompat.getDrawable(getContext(), R.drawable.select_white));
             }
         }
     };

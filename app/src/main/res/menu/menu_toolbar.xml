@@ -1,0 +1,25 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".DemoListActivity" >
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_test0"
+        android:title="Test0"
+        android:orderInCategory="90"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_edit"
+        android:title="Edit"
+        android:orderInCategory="80"
+        app:showAsAction="ifRoom"
+        app:actionLayout="@layout/menu_toolbar_edit" />
+</menu>
