@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -39,6 +40,9 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
     protected YTWebView mWebView;
     //播放单个视频
     private String mVideoId = "";
+
+    protected boolean isProceedTouchEvent = false;
+
 
     public YTPlayerView(Context context) {
         super(context);
@@ -126,6 +130,19 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
         return mButtonLayout.getVisibility() == GONE;
     }
 
+
+    public void setProceedTouchEvent(boolean enable) {
+        isProceedTouchEvent = enable;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if(isProceedTouchEvent) {
+            super.onTouchEvent(event);
+            return false;
+        }
+        return super.onTouchEvent(event);
+    }
 
     @Override
     public void onYouTubeIframeAPIReady() {

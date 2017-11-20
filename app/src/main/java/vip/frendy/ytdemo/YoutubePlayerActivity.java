@@ -36,6 +36,7 @@ public class YoutubePlayerActivity extends Activity {
         mPlayerView = findViewById(R.id.player_view);
         mPlayerView.setVideoId("H6SShCF58-U");
         mPlayerView.setVideoList(mVideoIds);
+//        mPlayerView.setProceedTouchEvent(true);
 
         findViewById(R.id.roll).setOnClickListener(new View.OnClickListener() {
             @Override
