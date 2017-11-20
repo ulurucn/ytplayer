@@ -168,6 +168,10 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
         }
     }
 
+    protected boolean isVideoPlaying() {
+        return mState == PlayerState.PLAYING;
+    }
+
     @Override
     public void onVideoEnd() {
         mState = PlayerState.ENDED;

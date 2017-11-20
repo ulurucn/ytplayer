@@ -5,12 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import vip.frendy.ytplayer.R;
-import vip.frendy.ytplayer.model.PlaylistItems;
+import vip.frendy.ytplayer.extension.PraseHelper;
 
 /**
  * Created by frendy on 2017/11/18.
@@ -40,25 +39,16 @@ public class ListAdapter<T> extends RecyclerView.Adapter<ListAdapter.ViewHolder<
     }
 
     static class ViewHolder<T> extends RecyclerView.ViewHolder {
-        TextView tvTitle;
+        private TextView mTitle;
+        private PraseHelper<T> mPraseHelper = new PraseHelper<>();
 
         ViewHolder(final View itemView) {
             super(itemView);
-            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
+            mTitle = (TextView) itemView.findViewById(R.id.tv_title);
         }
 
         private void bind(T item) {
-            tvTitle.setText(getTitle(item));
-        }
-
-        private String getTitle(T item) {
-            if(item instanceof String) {
-                return (String) item;
-            } else if(item instanceof PlaylistItems) {
-                return ((PlaylistItems) item).getSnippet().getTitle();
-            } else {
-                return "";
-            }
+            mTitle.setText(mPraseHelper.getTitle(item));
         }
     }
 
