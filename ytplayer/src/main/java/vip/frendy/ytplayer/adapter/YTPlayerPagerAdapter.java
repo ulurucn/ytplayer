@@ -29,7 +29,7 @@ import vip.frendy.ytplayer.R;
  * Created by frendy on 2017/11/17.
  */
 
-public class YTPlayerPagerAdapter extends PagerAdapter {
+public class YTPlayerPagerAdapter<T> extends PagerAdapter {
 
     private Context mContext;
 
@@ -38,15 +38,13 @@ public class YTPlayerPagerAdapter extends PagerAdapter {
     private RecyclerView.ItemDecoration mItemDecoration;
 
     private SwipeItemClickListener itemClickListener;
-    private UpdateDataListListener updateDataListListener;
 
     protected ListAdapter mAdapter;
     protected ArrayList<String> mDataList;
 
-    public YTPlayerPagerAdapter(Context context, SwipeItemClickListener itemClickListener, UpdateDataListListener updateDataListListener) {
+    public YTPlayerPagerAdapter(Context context, SwipeItemClickListener itemClickListener) {
         this.mContext = context;
         this.itemClickListener = itemClickListener;
-        this.updateDataListListener = updateDataListListener;
     }
 
     public void initDataList(ArrayList<String> list) {
@@ -148,9 +146,6 @@ public class YTPlayerPagerAdapter extends PagerAdapter {
 
             Collections.swap(mDataList, fromPosition, toPosition);
             mAdapter.notifyItemMoved(fromPosition, toPosition);
-            if(updateDataListListener != null) {
-                updateDataListListener.updateDataList(mDataList);
-            }
             return true;// 返回true表示处理了并可以换位置，返回false表示你没有处理并不能换位置。
         }
 
@@ -164,8 +159,4 @@ public class YTPlayerPagerAdapter extends PagerAdapter {
             Toast.makeText(mContext.getApplicationContext(), "现在的第" + position + "条被删除。", Toast.LENGTH_SHORT).show();
         }
     };
-
-    public interface UpdateDataListListener {
-        void updateDataList(ArrayList<String> list);
-    }
 }

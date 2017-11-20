@@ -11,10 +11,9 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
-import java.util.ArrayList;
-
 import vip.frendy.ytplayer.extension.HandlerExt;
 import vip.frendy.ytplayer.interfaces.IYTJSListener;
+import vip.frendy.ytplayer.model.PlaylistItems;
 
 import static vip.frendy.ytplayer.Contants.DEBUG;
 
@@ -22,11 +21,11 @@ import static vip.frendy.ytplayer.Contants.DEBUG;
  * Created by frendy on 2017/11/17.
  */
 
-public class YTPlayerView extends LinearLayout implements IYTJSListener, View.OnClickListener {
+public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View.OnClickListener {
     private static String TAG = "YTPlayerView";
 
     private LinearLayout mButtonLayout;
-    private Button mLoad, mStop, mClear, mPlayNext, mCueNext;
+    private Button mLoad, mStop, mClear;
     private ImageButton mPlayPause;
     private PlayerState mState = PlayerState.ENDED;
     private enum PlayerState {
@@ -39,10 +38,7 @@ public class YTPlayerView extends LinearLayout implements IYTJSListener, View.On
 
     protected YTWebView mWebView;
     //播放单个视频
-    private String mVideoId;
-    //播放列表
-    protected ArrayList<String> mVideoList = new ArrayList<>();
-    protected int mIndex = 0;
+    private String mVideoId = "";
 
     public YTPlayerView(Context context) {
         super(context);
@@ -76,10 +72,6 @@ public class YTPlayerView extends LinearLayout implements IYTJSListener, View.On
         mStop.setOnClickListener(this);
         mClear = findViewById(R.id.clear);
         mClear.setOnClickListener(this);
-        mPlayNext = findViewById(R.id.play_next);
-        mPlayNext.setOnClickListener(this);
-        mCueNext = findViewById(R.id.cue_next);
-        mCueNext.setOnClickListener(this);
 
         mSeekBar = findViewById(R.id.seek_bar);
         mSeekBar.setMax(MAX);
@@ -114,10 +106,8 @@ public class YTPlayerView extends LinearLayout implements IYTJSListener, View.On
         mVideoId = id;
     }
 
-    public void setVideoList(ArrayList<String> list) {
-        mVideoList.clear();
-        mVideoList.addAll(list);
-        mIndex = 0;
+    public void loadDefault() {
+        mWebView.loadDefault(mVideoId);
     }
 
     // 展开
@@ -242,12 +232,16 @@ public class YTPlayerView extends LinearLayout implements IYTJSListener, View.On
             mWebView.stopVideo();
         } else if(view.getId() == R.id.clear) {
             mWebView.clearVideo();
-        } else if(view.getId() == R.id.play_next && mVideoList.size() > 0) {
-            String id = mVideoList.get((mIndex ++) % mVideoList.size());
-            mWebView.loadVideoById(id);
-        } else if(view.getId() == R.id.cue_next && mVideoList.size() > 0) {
-            String id = mVideoList.get((mIndex ++) % mVideoList.size());
-            mWebView.cueVideoById(id);
+        }
+    }
+
+    protected String getVideoId(T video) {
+        if(video instanceof String) {
+            return (String) video;
+        } else if(video instanceof PlaylistItems) {
+            return ((PlaylistItems) video).getSnippet().getResourceId().getVideoId();
+        } else {
+            return "";
         }
     }
 }

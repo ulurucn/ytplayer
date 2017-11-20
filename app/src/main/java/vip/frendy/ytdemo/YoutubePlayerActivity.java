@@ -15,7 +15,7 @@ import vip.frendy.ytplayer.YTPlayerListView;
 
 public class YoutubePlayerActivity extends Activity {
 
-    private YTPlayerListView mPlayerView;
+    private YTPlayerListView<String> mPlayerView;
 
     private ArrayList<String> mVideoIds = new ArrayList<String>() {{
         //dmLSM9zM0ME - 59 secs video

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.tmall.ultraviewpager.UltraViewPager;
@@ -17,12 +18,18 @@ import vip.frendy.ytplayer.adapter.YTPlayerPagerAdapter;
  * Created by frendy on 2017/11/19.
  */
 
-public class YTPlayerListView extends YTPlayerView implements SwipeItemClickListener, YTPlayerPagerAdapter.UpdateDataListListener {
+public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemClickListener {
     private static String TAG = "YTPlayerListView";
 
     private LinearLayout mContent;
     private UltraViewPager mPager;
     private YTPlayerPagerAdapter mAdapter;
+
+    private Button mPlayNext, mCueNext;
+
+    //播放列表
+    protected ArrayList<T> mVideoList = new ArrayList<>();
+    protected int mIndex = 0;
 
     public YTPlayerListView(Context context) {
         super(context);
@@ -50,18 +57,23 @@ public class YTPlayerListView extends YTPlayerView implements SwipeItemClickList
         mPager = findViewById(R.id.pager);
         mPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL);
 
-        mAdapter = new YTPlayerPagerAdapter(context, this, this);
+        mAdapter = new YTPlayerPagerAdapter<T>(context, this);
         mPager.setAdapter(mAdapter);
         mPager.setInfiniteRatio(100);
 
         mPager.initIndicator();
         mPager.getIndicator().setOrientation(UltraViewPager.Orientation.HORIZONTAL);
+
+        mPlayNext = findViewById(R.id.play_next);
+        mPlayNext.setOnClickListener(this);
+        mCueNext = findViewById(R.id.cue_next);
+        mCueNext.setOnClickListener(this);
     }
 
-    @Override
-    public void setVideoList(ArrayList<String> list) {
-        super.setVideoList(list);
-        mAdapter.initDataList(list);
+    public void setVideoList(ArrayList<T> list) {
+        mVideoList.clear();
+        mVideoList.addAll(list);
+        mAdapter.initDataList(mVideoList);
     }
 
     @Override
@@ -78,12 +90,60 @@ public class YTPlayerListView extends YTPlayerView implements SwipeItemClickList
 
     @Override
     public void onItemClick(View itemView, int position) {
-        mWebView.loadVideoById(mVideoList.get(position));
+        mIndex = position;
+        mWebView.loadVideoById(getVideoId(position));
     }
 
     @Override
-    public void updateDataList(ArrayList<String> list) {
-        mVideoList.clear();
-        mVideoList.addAll(list);
+    public void onClick(View view) {
+        super.onClick(view);
+
+        if(view.getId() == R.id.play_next && mVideoList.size() > 0) {
+            mWebView.loadVideoById(getNextVideoId());
+        } else if(view.getId() == R.id.cue_next && mVideoList.size() > 0) {
+            mWebView.cueVideoById(getNextVideoId());
+        }
+    }
+
+    protected String getNextVideoId() {
+        T video = mVideoList.get((mIndex ++) % mVideoList.size());
+
+        return getVideoId(video);
+    }
+
+    protected String getVideoId(int position) {
+        T video = mVideoList.get(position);
+
+        return getVideoId(video);
+    }
+
+    // 增
+    public void addVideos(ArrayList<T> videos) {
+        ArrayList<T> list = new ArrayList<>();
+        list.addAll(mVideoList);
+        list.addAll(videos);
+        setVideoList(list);
+    }
+
+    // 删
+    public void removeVideos(ArrayList<T> videos) {
+        for(T video : videos) {
+            for(T item : mVideoList) {
+                if(getVideoId(video).equals(getVideoId(item))) {
+                    mVideoList.remove(item);
+                    break;
+                }
+            }
+        }
+    }
+
+    // 改
+    public void updateVideo(String video) {
+
+    }
+
+    // 查
+    public ArrayList<T> queryVideos() {
+        return new ArrayList<>();
     }
 }
