@@ -39,15 +39,15 @@ public class YTPlayerPagerAdapter<T> extends PagerAdapter {
 
     private SwipeItemClickListener itemClickListener;
 
-    protected ListAdapter mAdapter;
-    protected ArrayList<String> mDataList;
+    private ListAdapter<T> mAdapter;
+    private ArrayList<T> mDataList;
 
     public YTPlayerPagerAdapter(Context context, SwipeItemClickListener itemClickListener) {
         this.mContext = context;
         this.itemClickListener = itemClickListener;
     }
 
-    public void initDataList(ArrayList<String> list) {
+    public void initDataList(ArrayList<T> list) {
         mDataList = list;
     }
 
@@ -85,7 +85,7 @@ public class YTPlayerPagerAdapter<T> extends PagerAdapter {
                 mRecyclerView.setItemViewSwipeEnabled(false); // 滑动删除，默认关闭。
                 mRecyclerView.setLongPressDragEnabled(true); // 长按拖拽，默认关闭。
 
-                mAdapter = new ListAdapter();
+                mAdapter = new ListAdapter<T>();
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged(mDataList);
                 break;

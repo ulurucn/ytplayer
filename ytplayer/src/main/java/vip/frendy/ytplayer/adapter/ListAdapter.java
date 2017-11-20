@@ -7,18 +7,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import vip.frendy.ytplayer.R;
+import vip.frendy.ytplayer.model.PlaylistItems;
 
 /**
  * Created by frendy on 2017/11/18.
  */
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
-    private List<String> mDataList;
+public class ListAdapter<T> extends RecyclerView.Adapter<ListAdapter.ViewHolder<T>> {
+    private ArrayList<T> mDataList;
 
-    public void notifyDataSetChanged(List<String> dataList) {
+    public void notifyDataSetChanged(ArrayList<T> dataList) {
         this.mDataList = dataList;
         super.notifyDataSetChanged();
     }
@@ -29,25 +30,35 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list, parent, false));
+    public ViewHolder<T> onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder<T>(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder<T> holder, int position) {
         holder.bind(mDataList.get(position));
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder<T> extends RecyclerView.ViewHolder {
         TextView tvTitle;
 
-        public ViewHolder(final View itemView) {
+        ViewHolder(final View itemView) {
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
         }
 
-        public void bind(final String title) {
-            tvTitle.setText(title);
+        private void bind(T item) {
+            tvTitle.setText(getTitle(item));
+        }
+
+        private String getTitle(T item) {
+            if(item instanceof String) {
+                return (String) item;
+            } else if(item instanceof PlaylistItems) {
+                return ((PlaylistItems) item).getSnippet().getTitle();
+            } else {
+                return "";
+            }
         }
     }
 
