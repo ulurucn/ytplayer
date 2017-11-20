@@ -133,6 +133,7 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
 
     public void setProceedTouchEvent(boolean enable) {
         isProceedTouchEvent = enable;
+        mWebView.setProceedTouchEvent(enable);
     }
 
     @Override

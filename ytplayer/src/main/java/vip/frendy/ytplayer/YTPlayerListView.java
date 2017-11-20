@@ -3,6 +3,7 @@ package vip.frendy.ytplayer;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -86,6 +87,15 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
     public void rollup() {
         super.rollup();
         mContent.setVisibility(GONE);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if(isProceedTouchEvent) {
+            super.onTouchEvent(event);
+            return false;
+        }
+        return super.onTouchEvent(event);
     }
 
     @Override

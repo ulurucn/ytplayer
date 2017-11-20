@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -30,6 +31,8 @@ import static vip.frendy.ytplayer.Contants.DEBUG;
 
 public class YTWebView extends WebView {
     public String TAG = "YTWebView";
+
+    protected boolean isProceedTouchEvent = false;
 
     public YTWebView(Context context) {
         super(context);
@@ -207,5 +210,19 @@ public class YTWebView extends WebView {
             if(DEBUG) Log.d(TAG, "consoleMessage : " + consoleMessage.message());
             return super.onConsoleMessage(consoleMessage);
         }
+    }
+
+
+    public void setProceedTouchEvent(boolean enable) {
+        isProceedTouchEvent = enable;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if(isProceedTouchEvent) {
+            super.onTouchEvent(event);
+            return false;
+        }
+        return super.onTouchEvent(event);
     }
 }
