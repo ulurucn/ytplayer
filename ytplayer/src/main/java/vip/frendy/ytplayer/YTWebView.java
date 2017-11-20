@@ -83,6 +83,10 @@ public class YTWebView extends WebView {
         loadUrl("javascript:clearVideo()");
     }
 
+    public void seekVideo(double secs) {
+        loadUrl("javascript:seekVideo('"+ secs +"')");
+    }
+
     /**
      * Playlist
      */

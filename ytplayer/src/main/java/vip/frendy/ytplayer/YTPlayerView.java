@@ -90,7 +90,7 @@ public class YTPlayerView extends LinearLayout implements IYTJSListener, View.On
                 int progress = seekBar.getProgress();
                 double secs = (progress * totalVideoDuration) / 1000;
                 secs = Math.ceil(secs);
-                mWebView.loadUrl("javascript:seekVideo('"+ secs +"')");
+                mWebView.seekVideo(secs);
 
                 if(DEBUG) Log.d(TAG, "onStopTrackingTouch :: progress = " + progress +  "-- secs = " + secs);
             }
@@ -213,14 +213,19 @@ public class YTPlayerView extends LinearLayout implements IYTJSListener, View.On
         });
     }
 
-    private void updatePlayPuaseButton(PlayerState state) {
+    private void updatePlayPuaseButton(final PlayerState state) {
         if(mPlayPause == null) return;
 
-        if(state == PlayerState.PLAYING) {
-            mPlayPause.setImageResource(android.R.drawable.ic_media_pause);
-        } else if(state == PlayerState.PAUSED) {
-            mPlayPause.setImageResource(android.R.drawable.ic_media_play);
-        }
+        HandlerExt.postToUI(new Runnable() {
+            @Override
+            public void run() {
+                if(state == PlayerState.PLAYING) {
+                    mPlayPause.setImageResource(android.R.drawable.ic_media_pause);
+                } else if(state == PlayerState.PAUSED) {
+                    mPlayPause.setImageResource(android.R.drawable.ic_media_play);
+                }
+            }
+        });
     }
 
     @Override
