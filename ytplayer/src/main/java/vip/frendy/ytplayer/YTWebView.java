@@ -24,6 +24,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import vip.frendy.ytplayer.interfaces.IYTJSListener;
+import vip.frendy.ytplayer.interfaces.IYTWebViewListener;
 
 import static vip.frendy.ytplayer.Contants.DEBUG;
 
@@ -35,6 +36,8 @@ public class YTWebView extends WebView {
     public String TAG = "YTWebView";
 
     protected boolean isProceedTouchEvent = false;
+
+    private IYTWebViewListener mListener;
 
     public YTWebView(Context context) {
         super(context);
@@ -57,6 +60,10 @@ public class YTWebView extends WebView {
         addJavascriptInterface(new YTJSInterface(listener), "android");
 
         loadUrl("file:///android_asset/ytplayer.html");
+    }
+
+    public void setWebViewListener(IYTWebViewListener listener) {
+        mListener = listener;
     }
 
     /**
@@ -145,6 +152,12 @@ public class YTWebView extends WebView {
      */
 
     private class YTWebviewClient extends WebViewClient {
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            if(mListener != null) mListener.onPageFinished();
+        }
+
         @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             if(DEBUG) Log.d(TAG, "onReceivedError : description = " + description);

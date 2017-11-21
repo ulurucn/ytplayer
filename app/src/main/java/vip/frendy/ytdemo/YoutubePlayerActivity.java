@@ -39,9 +39,8 @@ public class YoutubePlayerActivity extends Activity {
         YTPlayerManager.getInstance().attachListener(mPlayerView);
 
         mPlayerView.attachWebView(YTPlayerManager.getInstance().getWebView());
-        mPlayerView.setVideoId("H6SShCF58-U");
         mPlayerView.setVideoList(mVideoIds);
-        mPlayerView.loadDefault();
+        mPlayerView.loadVideoById("dmLSM9zM0ME");
 
         findViewById(R.id.roll).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +57,7 @@ public class YoutubePlayerActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mPlayerView.stopVideo();
         mPlayerView.detachWebView();
         YTPlayerManager.getInstance().detachListener();
     }

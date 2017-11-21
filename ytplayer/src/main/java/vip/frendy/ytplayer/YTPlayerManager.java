@@ -3,12 +3,13 @@ package vip.frendy.ytplayer;
 import android.content.Context;
 
 import vip.frendy.ytplayer.interfaces.IYTJSListener;
+import vip.frendy.ytplayer.interfaces.IYTWebViewListener;
 
 /**
  * Created by frendy on 2017/11/21.
  */
 
-public class YTPlayerManager implements IYTJSListener {
+public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
 
     private static YTPlayerManager mPlayerManager;
 
@@ -21,14 +22,26 @@ public class YTPlayerManager implements IYTJSListener {
 
 
     private YTWebView mWebView;
+    private boolean hasLoadDefault = false;
     private IYTJSListener mClientListener;
 
     public void init(Context context) {
         mWebView = new YTWebView(context);
+        mWebView.setWebViewListener(this);
         mWebView.init(this);
     }
 
+    @Override
+    public void onPageFinished() {
+
+    }
+
     public YTWebView getWebView() {
+        if(!hasLoadDefault) {
+            hasLoadDefault = true;
+            mWebView.loadDefault("");
+        }
+
         return mWebView;
     }
 

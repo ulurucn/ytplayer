@@ -123,6 +123,24 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
         mWebView.loadDefault(mVideoId);
     }
 
+    public void loadVideoById(String id) {
+        mVideoId = id;
+        mWebView.loadVideoById(mVideoId);
+    }
+
+    public void cueVideoById(String id) {
+        mVideoId = id;
+        mWebView.cueVideoById(id);
+    }
+
+    public void stopVideo() {
+        mWebView.stopVideo();
+    }
+
+    public void clearVideo() {
+        mWebView.clearVideo();
+    }
+
     // 展开
     public void rollout() {
         mSeekBar.setVisibility(VISIBLE);
@@ -154,6 +172,10 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
         return super.onTouchEvent(event);
     }
 
+    protected boolean isVideoPlaying() {
+        return mState == PlayerState.PLAYING;
+    }
+
     @Override
     public void onYouTubeIframeAPIReady() {
 
@@ -175,10 +197,6 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    protected boolean isVideoPlaying() {
-        return mState == PlayerState.PLAYING;
     }
 
     @Override
@@ -260,9 +278,9 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
                 mWebView.playVideo();
             }
         } else if(view.getId() == R.id.stop) {
-            mWebView.stopVideo();
+            stopVideo();
         } else if(view.getId() == R.id.clear) {
-            mWebView.clearVideo();
+            clearVideo();
         }
     }
 
