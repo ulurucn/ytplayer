@@ -176,6 +176,10 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
         return mState == PlayerState.PLAYING;
     }
 
+    public boolean isVideoBuffering() {
+        return mState == PlayerState.BUFFERING;
+    }
+
     @Override
     public void onYouTubeIframeAPIReady() {
 
