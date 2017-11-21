@@ -22,7 +22,7 @@ import vip.frendy.ytplayer.adapter.YTPlayerPagerAdapter;
 public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemClickListener {
     private static String TAG = "YTPlayerListView";
 
-    private LinearLayout mContent;
+    private LinearLayout mContentInfo;
     private UltraViewPager mPager;
     private YTPlayerPagerAdapter mAdapter;
 
@@ -53,7 +53,7 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
     protected void init(Context context) {
         super.init(context);
 
-        mContent = findViewById(R.id.content);
+        mContentInfo = findViewById(R.id.content);
 
         mPager = findViewById(R.id.pager);
         mPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL);
@@ -80,13 +80,13 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
     @Override
     public void rollout() {
         super.rollout();
-        mContent.setVisibility(VISIBLE);
+        mContentInfo.setVisibility(VISIBLE);
     }
 
     @Override
     public void rollup() {
         super.rollup();
-        mContent.setVisibility(GONE);
+        mContentInfo.setVisibility(GONE);
     }
 
     @Override

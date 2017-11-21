@@ -40,7 +40,7 @@ public class YoutubePlayerActivity extends Activity {
 
         mPlayerView.attachWebView(YTPlayerManager.getInstance().getWebView());
         mPlayerView.setVideoList(mVideoIds);
-        mPlayerView.loadVideoById("dmLSM9zM0ME");
+        mPlayerView.loadVideoById("3tmd-ClpJxA");
 
         findViewById(R.id.roll).setOnClickListener(new View.OnClickListener() {
             @Override

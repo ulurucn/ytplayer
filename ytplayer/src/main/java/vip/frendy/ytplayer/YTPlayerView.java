@@ -25,8 +25,6 @@ import static vip.frendy.ytplayer.Contants.DEBUG;
 public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View.OnClickListener {
     private static String TAG = "YTPlayerView";
 
-    protected LinearLayout mButtonLayout;
-    protected Button mLoad, mStop, mClear;
     protected ImageButton mPlayPause;
     protected PlayerState mState = PlayerState.ENDED;
     protected enum PlayerState {
@@ -40,7 +38,7 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
     protected LinearLayout mContent;
     protected YTWebView mWebView;
     //播放单个视频
-    private String mVideoId = "";
+    protected String mVideoId = "";
 
     protected boolean isProceedTouchEvent = false;
 
@@ -68,15 +66,8 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
     protected void init(Context context) {
         LayoutInflater.from(context).inflate(getLayoutResId(), this);
 
-        mButtonLayout = findViewById(R.id.buttonLayout);
-        mLoad = findViewById(R.id.load);
-        mLoad.setOnClickListener(this);
         mPlayPause = findViewById(R.id.play_pause);
         mPlayPause.setOnClickListener(this);
-        mStop = findViewById(R.id.stop);
-        mStop.setOnClickListener(this);
-        mClear = findViewById(R.id.clear);
-        mClear.setOnClickListener(this);
 
         mSeekBar = findViewById(R.id.seek_bar);
         mSeekBar.setMax(MAX);
@@ -144,17 +135,17 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
     // 展开
     public void rollout() {
         mSeekBar.setVisibility(VISIBLE);
-        mButtonLayout.setVisibility(VISIBLE);
+        mPlayPause.setVisibility(VISIBLE);
     }
 
     // 收起
     public void rollup() {
         mSeekBar.setVisibility(GONE);
-        mButtonLayout.setVisibility(GONE);
+        mPlayPause.setVisibility(GONE);
     }
 
     public boolean isRollup() {
-        return mButtonLayout.getVisibility() == GONE;
+        return mSeekBar.getVisibility() == GONE;
     }
 
 
@@ -286,18 +277,12 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.load && mVideoId != null) {
-            mWebView.loadDefault(mVideoId);
-        } else if(view.getId() == R.id.play_pause) {
+        if(view.getId() == R.id.play_pause) {
             if(mState == PlayerState.PLAYING || mState == PlayerState.BUFFERING) {
                 mWebView.pauseVideo();
             } else {
                 mWebView.playVideo();
             }
-        } else if(view.getId() == R.id.stop) {
-            stopVideo();
-        } else if(view.getId() == R.id.clear) {
-            clearVideo();
         }
     }
 

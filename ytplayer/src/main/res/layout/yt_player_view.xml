@@ -21,40 +21,12 @@
             android:layout_gravity="bottom"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/buttonLayout"
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/play_pause"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/load"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Load"
-            android:visibility="gone"/>
-
-        <ImageButton
-            android:id="@+id/play_pause"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@android:drawable/ic_media_play" />
-
-        <Button
-            android:id="@+id/stop"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Stop" />
-
-        <Button
-            android:id="@+id/clear"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Clear" />
-
-    </LinearLayout>
+        android:layout_weight="1"
+        android:layout_gravity="center_horizontal"
+        android:src="@android:drawable/ic_media_play" />
 
 </LinearLayout>
