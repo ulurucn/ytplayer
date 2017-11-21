@@ -25,11 +25,11 @@ import static vip.frendy.ytplayer.Contants.DEBUG;
 public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View.OnClickListener {
     private static String TAG = "YTPlayerView";
 
-    private LinearLayout mButtonLayout;
-    private Button mLoad, mStop, mClear;
-    private ImageButton mPlayPause;
-    private PlayerState mState = PlayerState.ENDED;
-    private enum PlayerState {
+    protected LinearLayout mButtonLayout;
+    protected Button mLoad, mStop, mClear;
+    protected ImageButton mPlayPause;
+    protected PlayerState mState = PlayerState.ENDED;
+    protected enum PlayerState {
         ENDED, PLAYING, PAUSED, BUFFERING, CUED
     };
 
@@ -37,6 +37,7 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
     private SeekBar mSeekBar;
     private float totalVideoDuration;
 
+    protected LinearLayout mContent;
     protected YTWebView mWebView;
     //播放单个视频
     private String mVideoId = "";
@@ -102,8 +103,16 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
             }
         });
 
-        mWebView = findViewById(R.id.web_view);
-        mWebView.init(this);
+        mContent = findViewById(R.id.webview_content);
+    }
+
+    public void attachWebView(YTWebView webView) {
+        mWebView = webView;
+        mContent.addView(mWebView);
+    }
+
+    public void detachWebView() {
+        mContent.removeView(mWebView);
     }
 
     public void setVideoId(String id) {

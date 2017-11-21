@@ -7,6 +7,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import vip.frendy.ytplayer.YTPlayerManager;
 import vip.frendy.ytplayer.YTPlayerSheetListView;
 
 /**
@@ -34,9 +35,13 @@ public class YoutubePlayerActivity extends Activity {
         setContentView(R.layout.activity_youtube_player);
 
         mPlayerView = findViewById(R.id.player_view);
+
+        YTPlayerManager.getInstance().attachListener(mPlayerView);
+
+        mPlayerView.attachWebView(YTPlayerManager.getInstance().getWebView());
         mPlayerView.setVideoId("H6SShCF58-U");
         mPlayerView.setVideoList(mVideoIds);
-//        mPlayerView.setProceedTouchEvent(true);
+        mPlayerView.loadDefault();
 
         findViewById(R.id.roll).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,5 +53,12 @@ public class YoutubePlayerActivity extends Activity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPlayerView.detachWebView();
+        YTPlayerManager.getInstance().detachListener();
     }
 }
