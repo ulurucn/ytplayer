@@ -24,40 +24,12 @@
             android:layout_marginStart="8dp"
             android:gravity="center_vertical"/>
 
-        <LinearLayout
-            android:id="@+id/buttonLayout"
+        <ImageButton
+            android:id="@+id/play_pause"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/play_pause"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@android:drawable/ic_media_play" />
-
-            <Button
-                android:id="@+id/load"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Load"
-                android:visibility="gone"/>
-            <Button
-                android:id="@+id/stop"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Stop"
-                android:visibility="gone"/>
-            <Button
-                android:id="@+id/clear"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Clear"
-                android:visibility="gone"/>
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@android:drawable/ic_media_play" />
     </LinearLayout>
 
     <SeekBar
