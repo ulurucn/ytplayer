@@ -179,4 +179,9 @@ public class YoutubeListActivity extends Activity implements IYTJSListener {
 
 	}
 
+	@Override
+	public void onVideoStateCheckResult(int state) {
+
+	}
+
 }

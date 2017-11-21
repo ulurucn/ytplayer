@@ -102,6 +102,10 @@ public class YTWebView extends WebView {
         loadUrl("javascript:seekVideo('"+ secs +"')");
     }
 
+    public void checkVideoState() {
+        loadUrl("javascript:checkVideoState()");
+    }
+
     /**
      * Playlist
      */

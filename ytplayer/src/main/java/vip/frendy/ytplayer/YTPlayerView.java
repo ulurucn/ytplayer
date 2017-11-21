@@ -227,6 +227,19 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
         mState = PlayerState.CUED;
     }
 
+    @Override
+    public void onVideoStateCheckResult(int state) {
+        switch (state) {
+            case -1: break;
+            case 0: mState = PlayerState.ENDED; break;
+            case 1: mState = PlayerState.PLAYING; break;
+            case 2: mState = PlayerState.PAUSED; break;
+            case 3: mState = PlayerState.BUFFERING; break;
+            case 5: mState = PlayerState.CUED; break;
+            default: break;
+        }
+    }
+
 
     private void changeSeekBar(float time){
         float progress =  (time/totalVideoDuration) * 1000;

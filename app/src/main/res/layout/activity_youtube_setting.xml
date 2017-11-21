@@ -43,6 +43,14 @@
             android:onClick="volume"
             android:textSize="10sp"
             android:text="volume-50" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="check"
+            android:textSize="10sp"
+            android:text="check" />
     </LinearLayout>
 
     <SeekBar

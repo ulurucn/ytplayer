@@ -55,4 +55,9 @@ public class YTJSInterface {
     public void onVideoCued() {
         listener.onVideoCued();
     }
+
+    @JavascriptInterface
+    public void onVideoStateCheckResult(int state) {
+        listener.onVideoStateCheckResult(state);
+    }
 }

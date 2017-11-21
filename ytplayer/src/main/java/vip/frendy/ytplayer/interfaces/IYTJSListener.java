@@ -21,4 +21,6 @@ public interface IYTJSListener {
     void onVideoBuffering();
 
     void onVideoCued();
+
+    void onVideoStateCheckResult(int state);
 }

@@ -195,4 +195,9 @@ public class YoutubeActivity extends Activity implements IYTJSListener {
 		Log.i(TAG, "** onVideoCued");
 	}
 
+	@Override
+	public void onVideoStateCheckResult(int state) {
+
+	}
+
 }

@@ -104,6 +104,10 @@ public class YoutubeSettingActivity extends Activity implements IYTJSListener {
 		webView.setVolume(50);
 	}
 
+	public void check(View view) {
+		webView.checkVideoState();
+	}
+
 
 	@Override
 	public void onYouTubeIframeAPIReady() {
@@ -151,6 +155,11 @@ public class YoutubeSettingActivity extends Activity implements IYTJSListener {
 	@Override
 	public void onVideoCued() {
 
+	}
+
+	@Override
+	public void onVideoStateCheckResult(int state) {
+		Log.i(TAG, "** state = " + state);
 	}
 
 }

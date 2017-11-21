@@ -99,4 +99,9 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
     public void onVideoCued() {
         mClientListener.onVideoCued();
     }
+
+    @Override
+    public void onVideoStateCheckResult(int state) {
+        mClientListener.onVideoStateCheckResult(state);
+    }
 }

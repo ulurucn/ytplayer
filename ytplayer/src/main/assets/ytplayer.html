@@ -167,6 +167,12 @@
 			player.seekTo(time, true);
 		}
 
+		function checkVideoState() {
+			console.log("checkVideoState------------>");
+
+			window.android.onVideoStateCheckResult(player.getPlayerState());
+		}
+
 		// play list
 
 		function cuePlaylist(list) {
