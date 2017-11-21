@@ -172,7 +172,7 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
         return super.onTouchEvent(event);
     }
 
-    protected boolean isVideoPlaying() {
+    public boolean isVideoPlaying() {
         return mState == PlayerState.PLAYING;
     }
 
