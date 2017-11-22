@@ -173,6 +173,12 @@
 			window.android.onVideoStateCheckResult(player.getPlayerState());
 		}
 
+		function setSize(w, h) {
+			console.log("setSize------------>w = " + w + ", h = " + h);
+
+			player.setSize(w, h);
+		}
+
 		// play list
 
 		function cuePlaylist(list) {

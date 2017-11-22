@@ -1,8 +1,10 @@
 package vip.frendy.ytdemo;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -29,6 +31,8 @@ public class YoutubePlayerActivity extends Activity {
         add("3tmd-ClpJxA");
     }};
 
+    public static int flag = 0;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +56,22 @@ public class YoutubePlayerActivity extends Activity {
                 }
             }
         });
+
+        findViewById(R.id.size).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int w = px2dp(YoutubePlayerActivity.this, mPlayerView.getMeasuredWidth());
+                int h = px2dp(YoutubePlayerActivity.this, mPlayerView.getMeasuredHeight());
+
+                if((flag % 2) == 0) {
+                    flag++;
+                    mPlayerView.setSize(160, 90);
+                } else {
+                    flag++;
+                    mPlayerView.setSize(w, h);
+                }
+            }
+        });
     }
 
     @Override
@@ -60,5 +80,11 @@ public class YoutubePlayerActivity extends Activity {
         mPlayerView.stopVideo();
         mPlayerView.detachWebView();
         YTPlayerManager.getInstance().detachListener();
+    }
+
+    public int px2dp(Context context, int px) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        int dp = Math.round(px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return dp;
     }
 }

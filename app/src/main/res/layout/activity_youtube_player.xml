@@ -11,10 +11,22 @@
         android:layout_height="wrap_content">
     </vip.frendy.ytplayer.YTPlayerSheetListView>
 
-    <Button
-        android:id="@+id/roll"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:text="roll"/>
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/roll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="roll"/>
+
+        <Button
+            android:id="@+id/size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="size"/>
+    </LinearLayout>
+
 </FrameLayout>

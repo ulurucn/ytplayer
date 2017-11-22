@@ -106,6 +106,10 @@ public class YTWebView extends WebView {
         loadUrl("javascript:checkVideoState()");
     }
 
+    public void setSize(int w, int h) {
+        loadUrl("javascript:setSize(" + w + "," + h + ")");
+    }
+
     /**
      * Playlist
      */

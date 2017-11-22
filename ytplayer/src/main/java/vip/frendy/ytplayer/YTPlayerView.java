@@ -132,6 +132,10 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
         mWebView.clearVideo();
     }
 
+    public void setSize(int w, int h) {
+        mWebView.setSize(w, h);
+    }
+
     // 展开
     public void rollout() {
         mSeekBar.setVisibility(VISIBLE);
