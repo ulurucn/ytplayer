@@ -60,6 +60,7 @@ public class YTWebView extends WebView {
         addJavascriptInterface(new YTJSInterface(listener), "android");
 
         loadUrl("file:///android_asset/ytplayer.html");
+//        loadDataWithBaseURL("https://www.youtube.com", PlayerUtils.getVideoPlayerHTML(mContext), "text/html", "utf-8", null);
     }
 
     public void setWebViewListener(IYTWebViewListener listener) {
