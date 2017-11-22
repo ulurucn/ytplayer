@@ -137,21 +137,31 @@ public class YoutubeListActivity extends Activity implements IYTJSListener {
 	}
 
 	@Override
-	public void updateVideoDuration(String duration) {
+	public void updateVideoDuration(float duration) {
 		try {
-			changeSlider(Float.parseFloat(duration));
+			changeSlider(duration);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void updateTotalVideoDuration(String duration) {
+	public void updateTotalVideoDuration(float duration) {
 		try {
-			totalVideoDuration = Float.parseFloat(duration);
+			totalVideoDuration = duration;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void onReady() {
+
+	}
+
+	@Override
+	public void onVideoUnStarted() {
+
 	}
 
 	@Override
@@ -181,6 +191,26 @@ public class YoutubeListActivity extends Activity implements IYTJSListener {
 
 	@Override
 	public void onVideoStateCheckResult(int state) {
+
+	}
+
+	@Override
+	public void onApiChange() {
+
+	}
+
+	@Override
+	public void onError(int error) {
+
+	}
+
+	@Override
+	public void onPlaybackRateChange(double rate) {
+
+	}
+
+	@Override
+	public void onPlaybackQualityChange(int playbackQuality) {
 
 	}
 

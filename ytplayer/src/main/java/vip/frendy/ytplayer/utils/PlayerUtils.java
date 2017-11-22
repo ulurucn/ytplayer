@@ -14,7 +14,7 @@ import vip.frendy.ytplayer.R;
 
 public class PlayerUtils {
 
-    public static String getVideoPlayerHTML(Context context) {
+    public static String getPlayerHTML(Context context) {
         try {
             InputStream inputStream = context.getResources().openRawResource(R.raw.player);
 

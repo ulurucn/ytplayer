@@ -20,15 +20,30 @@ public class YTJSInterface {
     }
 
     @JavascriptInterface
-    public void updateVideoDuration(String duration) {
+    public void onYouTubeIframeAPIReady() {
+        listener.onYouTubeIframeAPIReady();
+    }
+
+    @JavascriptInterface
+    public void updateVideoDuration(float duration) {
         if(DEBUG) Log.d(TAG, "setVideoDuration = " + duration);
         listener.updateVideoDuration(duration);
     }
 
     @JavascriptInterface
-    public void updateTotalVideoDuration(String duration) {
+    public void updateTotalVideoDuration(float duration) {
         if(DEBUG) Log.d(TAG, "updateTotalVideoDuration = " + duration);
         listener.updateTotalVideoDuration(duration);
+    }
+
+    @JavascriptInterface
+    public void onReady() {
+        listener.onReady();
+    }
+
+    @JavascriptInterface
+    public void onVideoUnStarted() {
+        listener.onVideoUnStarted();
     }
 
     @JavascriptInterface
@@ -59,5 +74,25 @@ public class YTJSInterface {
     @JavascriptInterface
     public void onVideoStateCheckResult(int state) {
         listener.onVideoStateCheckResult(state);
+    }
+
+    @JavascriptInterface
+    public void onApiChange() {
+        listener.onApiChange();
+    }
+
+    @JavascriptInterface
+    public void onError(int error) {
+        listener.onError(error);
+    }
+
+    @JavascriptInterface
+    public void onPlaybackRateChange(double rate) {
+        listener.onPlaybackRateChange(rate);
+    }
+
+    @JavascriptInterface
+    public void onPlaybackQualityChange(int playbackQuality) {
+        listener.onPlaybackQualityChange(playbackQuality);
     }
 }

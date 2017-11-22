@@ -60,15 +60,27 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
     }
 
     @Override
-    public void updateVideoDuration(String duration) {
+    public void updateVideoDuration(float duration) {
         if(mClientListener != null)
             mClientListener.updateVideoDuration(duration);
     }
 
     @Override
-    public void updateTotalVideoDuration(String duration) {
+    public void updateTotalVideoDuration(float duration) {
         if(mClientListener != null)
             mClientListener.updateTotalVideoDuration(duration);
+    }
+
+    @Override
+    public void onReady() {
+        if(mClientListener != null)
+            mClientListener.onReady();
+    }
+
+    @Override
+    public void onVideoUnStarted() {
+        if(mClientListener != null)
+            mClientListener.onVideoUnStarted();
     }
 
     @Override
@@ -97,11 +109,37 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
 
     @Override
     public void onVideoCued() {
-        mClientListener.onVideoCued();
+        if(mClientListener != null)
+            mClientListener.onVideoCued();
     }
 
     @Override
     public void onVideoStateCheckResult(int state) {
-        mClientListener.onVideoStateCheckResult(state);
+        if(mClientListener != null)
+            mClientListener.onVideoStateCheckResult(state);
+    }
+
+    @Override
+    public void onApiChange() {
+        if(mClientListener != null)
+            mClientListener.onApiChange();
+    }
+
+    @Override
+    public void onError(int error) {
+        if(mClientListener != null)
+            mClientListener.onError(error);
+    }
+
+    @Override
+    public void onPlaybackRateChange(double rate) {
+        if(mClientListener != null)
+            mClientListener.onPlaybackRateChange(rate);
+    }
+
+    @Override
+    public void onPlaybackQualityChange(int playbackQuality) {
+        if(mClientListener != null)
+            mClientListener.onPlaybackQualityChange(playbackQuality);
     }
 }

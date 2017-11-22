@@ -25,6 +25,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import vip.frendy.ytplayer.interfaces.IYTJSListener;
 import vip.frendy.ytplayer.interfaces.IYTWebViewListener;
+import vip.frendy.ytplayer.utils.PlayerUtils;
 
 import static vip.frendy.ytplayer.Contants.DEBUG;
 
@@ -34,13 +35,17 @@ import static vip.frendy.ytplayer.Contants.DEBUG;
 
 public class YTWebView extends WebView {
     public String TAG = "YTWebView";
+    public static boolean BASEURL_VERSION = false;
 
+    private Context mContext;
     protected boolean isProceedTouchEvent = false;
 
     private IYTWebViewListener mListener;
 
     public YTWebView(Context context) {
         super(context);
+        mContext = context;
+
         setLayoutParams(new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
@@ -48,6 +53,7 @@ public class YTWebView extends WebView {
 
     public YTWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mContext = context;
     }
 
     @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
@@ -59,8 +65,12 @@ public class YTWebView extends WebView {
         setWebViewClient(new YTWebviewClient());
         addJavascriptInterface(new YTJSInterface(listener), "android");
 
-        loadUrl("file:///android_asset/ytplayer.html");
-//        loadDataWithBaseURL("https://www.youtube.com", PlayerUtils.getVideoPlayerHTML(mContext), "text/html", "utf-8", null);
+        if(!BASEURL_VERSION) {
+            loadUrl("file:///android_asset/ytplayer.html");
+        } else {
+            loadDataWithBaseURL("https://www.youtube.com",
+                    PlayerUtils.getPlayerHTML(mContext), "text/html", "utf-8", null);
+        }
     }
 
     public void setWebViewListener(IYTWebViewListener listener) {
@@ -72,15 +82,25 @@ public class YTWebView extends WebView {
      */
 
     public void loadDefault(String id) {
-        loadUrl("javascript:loadVideo('" + id + "')");
+        if(!BASEURL_VERSION) {
+            loadUrl("javascript:loadVideo('" + id + "')");
+        }
     }
 
     public void loadVideoById(String id) {
-        loadUrl("javascript:loadVideoById('" + id + "')");
+        if(!BASEURL_VERSION) {
+            loadUrl("javascript:loadVideoById('" + id + "')");
+        } else {
+            loadUrl("javascript:loadVideo('" + id +"', " + 0 +")");
+        }
     }
 
     public void cueVideoById(String id) {
-        loadUrl("javascript:cueVideoById('" + id + "')");
+        if(!BASEURL_VERSION) {
+            loadUrl("javascript:cueVideoById('" + id + "')");
+        } else {
+            loadUrl("javascript:cueVideo('" + id +"', " + 0 +")");
+        }
     }
 
     public void playVideo() {
@@ -100,7 +120,11 @@ public class YTWebView extends WebView {
     }
 
     public void seekVideo(double secs) {
-        loadUrl("javascript:seekVideo('"+ secs +"')");
+        if(!BASEURL_VERSION) {
+            loadUrl("javascript:seekVideo('"+ secs +"')");
+        } else {
+            loadUrl("javascript:seekTo(" + secs +")");
+        }
     }
 
     public void checkVideoState() {
@@ -187,6 +211,10 @@ public class YTWebView extends WebView {
         @SuppressWarnings("deprecation")
         @Override
         public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+            if(BASEURL_VERSION) {
+                return super.shouldInterceptRequest(view, url);
+            }
+
             if(url.contains("https://www.youtube.com/")) {
                 return getNewResponse(url, new HashMap<String, String>());
             } else {
@@ -197,6 +225,10 @@ public class YTWebView extends WebView {
         @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         @Override
         public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+            if(BASEURL_VERSION) {
+                return super.shouldInterceptRequest(view, request);
+            }
+
             String url = request.getUrl().toString();
             if(url.contains("https://www.youtube.com/")) {
                 return getNewResponse(url, request.getRequestHeaders());

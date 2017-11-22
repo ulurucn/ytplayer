@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -181,21 +180,31 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
     }
 
     @Override
-    public void updateVideoDuration(String duration) {
+    public void updateVideoDuration(float duration) {
         try {
-            changeSeekBar(Float.parseFloat(duration));
+            changeSeekBar(duration);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void updateTotalVideoDuration(String duration) {
+    public void updateTotalVideoDuration(float duration) {
         try {
-            totalVideoDuration = Float.parseFloat(duration);
+            totalVideoDuration = duration;
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onReady() {
+
+    }
+
+    @Override
+    public void onVideoUnStarted() {
+
     }
 
     @Override
@@ -237,6 +246,26 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
             case 5: mState = PlayerState.CUED; break;
             default: break;
         }
+    }
+
+    @Override
+    public void onApiChange() {
+
+    }
+
+    @Override
+    public void onError(int error) {
+
+    }
+
+    @Override
+    public void onPlaybackRateChange(double rate) {
+
+    }
+
+    @Override
+    public void onPlaybackQualityChange(int playbackQuality) {
+
     }
 
 

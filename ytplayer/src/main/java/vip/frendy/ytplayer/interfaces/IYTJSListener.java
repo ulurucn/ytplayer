@@ -8,9 +8,13 @@ public interface IYTJSListener {
 
     void onYouTubeIframeAPIReady();
 
-    void updateVideoDuration(String duration);
+    void updateVideoDuration(float duration);
 
-    void updateTotalVideoDuration(String duration);
+    void updateTotalVideoDuration(float duration);
+
+    void onReady();
+
+    void onVideoUnStarted();
 
     void onVideoEnd();
 
@@ -23,4 +27,12 @@ public interface IYTJSListener {
     void onVideoCued();
 
     void onVideoStateCheckResult(int state);
+
+    void onApiChange();
+
+    void onError(int error);
+
+    void onPlaybackRateChange(double rate);
+
+    void onPlaybackQualityChange(int playbackQuality);
 }

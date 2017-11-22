@@ -51,8 +51,7 @@
 
     	function onPlayerReady(event) {
     		console.log('[JS] player is ready');
-
-    		onReady();
+    		window.android.onReady();
     	}
 
     	// id of the task used to periodically send out the playback seconds
@@ -63,21 +62,21 @@
 
             switch (event.data) {
             	case YT.PlayerState.UNSTARTED: {
-                    onStateChange("UNSTARTED");
+                    window.android.onVideoUnStarted();
                     break;
                 }
 
             	case YT.PlayerState.ENDED: {
-                    onStateChange("ENDED");
+                    window.android.onVideoEnd();
                     break;
                 }
 
                 case YT.PlayerState.PLAYING: {
-                    onStateChange("PLAYING");
+                    window.android.onVideoPlaying();
 
                     // start task
                     timerTaskId = setInterval(function() {
-                        onCurrentSeconds();
+                        onVideoDuration(player.getCurrentTime());
                     }, 100);
 
                     // data available only if player is ready
@@ -86,24 +85,22 @@
                     var videoId = videoData['video_id'];
 
                     // send video data
-                    sendDuration();
-                    sendVideoTitle(title);
-                    sendVideoId(videoId)
+                    updateTotalVideoDuration();
                     break;
                 }
 
                 case YT.PlayerState.PAUSED: {
-                    onStateChange("PAUSED");
+                    window.android.onVideoPaused();
                     break;
                 }
 
                 case YT.PlayerState.BUFFERING: {
-                    onStateChange("BUFFERING");
+                    window.android.onVideoBuffering();
                     break;
                 }
 
                 case YT.PlayerState.CUED: {
-                    onStateChange("CUED");
+                    window.android.onVideoCued();
                     break;
                 }
             }
@@ -111,73 +108,50 @@
 
         function onPlayerPlaybackQualityChange(playbackQuality) {
         	console.log('[JS] quality changed to ' +playbackQuality.data);
-
         	onPlaybackQualityChange(playbackQuality.data);
         }
 
         function onPlayerPlaybackRateChange(playbackRate) {
         	console.log('[JS] playback rate changed to ' +playbackRate.data);
-
         	onPlaybackRateChange(playbackRate.data);
         }
 
         function onPlayerError(error) {
         	console.log('[JS] An error occurred: ' +error.data);
-
         	onError(error.data);
         }
 
         function onPlayerApiChange() {
         	console.log('[JS] player API changed');
-
         	onApiChange();
         }
 
         // WEB to APP functions
 
-        function onReady() {
-        	window.YouTubePlayerBridge.onReady();
-        }
-
-        function onStateChange(state) {
-        	window.YouTubePlayerBridge.onStateChange(state);
-        }
-
         function onPlaybackQualityChange(quality) {
-        	window.YouTubePlayerBridge.onPlaybackQualityChange(quality);
+        	window.android.onPlaybackQualityChange(quality);
         }
 
         function onPlaybackRateChange(rate) {
-            window.YouTubePlayerBridge.onPlaybackRateChange(rate);
+            window.android.onPlaybackRateChange(rate);
         }
 
         function onError(error) {
-        	window.YouTubePlayerBridge.onError(error);
+        	window.android.onError(error);
         }
 
         function onApiChange() {
-        	window.YouTubePlayerBridge.onApiChange();
+        	window.android.onApiChange();
         }
 
-        function onCurrentSeconds() {
-        	window.YouTubePlayerBridge.currentSeconds(player.getCurrentTime());
-        }
+        function updateTotalVideoDuration() {
+			window.android.updateTotalVideoDuration(player.getDuration());
+		}
 
-        function sendDuration() {
-        	window.YouTubePlayerBridge.onVideoDuration(player.getDuration());
-        }
-
-        function sendVideoTitle(title) {
-        	window.YouTubePlayerBridge.onVideoTitle(title);
-        }
-
-        function sendVideoId(id) {
-        	window.YouTubePlayerBridge.onVideoId(id);
-        }
-
-        function setLog(msg) {
-        	window.YouTubePlayerBridge.onLog(msg);
-        }
+		function onVideoDuration(time) {
+			console.log("[JS] on video duration time = " + time);
+			window.android.updateVideoDuration(time);
+		}
 
         // APP to WEB functions
 
@@ -193,30 +167,97 @@
 
         function pauseVideo() {
         	console.log("[JS] Pause video");
-
         	player.pauseVideo();
         }
 
         function playVideo() {
         	console.log("[JS] Play video");
-
         	player.playVideo();
         }
 
+		function stopVideo() {
+			console.log("[JS] Stop video");
+			player.stopVideo();
+		}
+
+		function clearVideo() {
+			console.log("[JS] Clear video");
+			player.clearVideo();
+		}
+
         function loadVideo(videoId, startSeconds) {
         	console.log("[JS] Loading video: " +videoId + " - " + startSeconds);
-
-        	setLog("Loading video: " +videoId + " - " + startSeconds);
-
             player.loadVideoById(videoId, startSeconds);
         }
 
         function cueVideo(videoId, startSeconds) {
         	console.log("[JS] Cue video: " +videoId + " - " + startSeconds);
-            setLog("Cue video: " +videoId + " - " + startSeconds);
-
             player.cueVideoById(videoId, startSeconds);
         }
+
+		function checkVideoState() {
+			console.log("[JS] Check video state");
+			window.android.onVideoStateCheckResult(player.getPlayerState());
+		}
+
+		function setSize(w, h) {
+			console.log("[JS] set video size : w = " + w + ", h = " + h);
+			player.setSize(w, h);
+		}
+
+		// play list
+
+		function cuePlaylist(list) {
+			console.log("[JS] cue play list = " + list);
+			player.cuePlaylist(list.split(','), 0, 0);
+		}
+
+		function loadPlaylist(list) {
+			console.log("[JS] load play list = " + list);
+			player.loadPlaylist(list.split(','), 0, 0);
+		}
+
+		function nextVideo() {
+			console.log("[JS] next video");
+			player.nextVideo();
+		}
+
+		function previousVideo() {
+			console.log("[JS] previous video");
+			player.previousVideo();
+		}
+
+		function playVideoAt(index) {
+			console.log("[JS] play video at = " + index);
+			player.playVideoAt(index);
+		}
+
+		function setLoop(loop) {
+			console.log("[JS] set loop = " + loop);
+			player.setLoop(loop);
+		}
+
+		function setShuffle(shuffle) {
+			console.log("[JS] set shuffle = " + shuffle);
+			player.setShuffle(shuffle);
+		}
+
+		// player setting
+
+		function mute() {
+			if(player.isMuted()) {
+				console.log("[JS] unMute");
+				player.unMute();
+			} else {
+				console.log("[JS] mute");
+				player.mute();
+			}
+		}
+
+		function setVolume(volume) {
+			console.log("[JS] set volume = " + volume);
+			player.setVolume();
+		}
 
     </script>
 
