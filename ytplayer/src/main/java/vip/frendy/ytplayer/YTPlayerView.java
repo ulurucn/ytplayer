@@ -204,13 +204,14 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
 
     @Override
     public void onVideoUnStarted() {
-
+        updatePlayPuaseButton(mState);
     }
 
     @Override
     public void onVideoEnd() {
         mState = PlayerState.ENDED;
         setSeekBar("ENDED");
+        updatePlayPuaseButton(mState);
     }
 
     @Override
@@ -228,11 +229,13 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
     @Override
     public void onVideoBuffering() {
         mState = PlayerState.BUFFERING;
+        updatePlayPuaseButton(mState);
     }
 
     @Override
     public void onVideoCued() {
         mState = PlayerState.CUED;
+        updatePlayPuaseButton(mState);
     }
 
     @Override
@@ -299,9 +302,9 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
         HandlerExt.postToUI(new Runnable() {
             @Override
             public void run() {
-                if(state == PlayerState.PLAYING) {
+                if(state == PlayerState.PLAYING || state == PlayerState.BUFFERING) {
                     mPlayPause.setImageResource(android.R.drawable.ic_media_pause);
-                } else if(state == PlayerState.PAUSED) {
+                } else {
                     mPlayPause.setImageResource(android.R.drawable.ic_media_play);
                 }
             }
