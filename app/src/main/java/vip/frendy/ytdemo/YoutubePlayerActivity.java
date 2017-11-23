@@ -9,8 +9,10 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import vip.frendy.ytplayer.YTPlayerListPagerView;
 import vip.frendy.ytplayer.YTPlayerListView;
 import vip.frendy.ytplayer.YTPlayerManager;
+import vip.frendy.ytplayer.YTPlayerSheetListView;
 
 /**
  * Created by frendy on 2017/11/17.
@@ -18,7 +20,7 @@ import vip.frendy.ytplayer.YTPlayerManager;
 
 public class YoutubePlayerActivity extends Activity {
 
-    private YTPlayerListView<String> mPlayerView;
+    private YTPlayerSheetListView<String> mPlayerView;
 
     private ArrayList<String> mVideoIds = new ArrayList<String>() {{
         //dmLSM9zM0ME - 59 secs video

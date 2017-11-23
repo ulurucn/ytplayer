@@ -27,6 +27,10 @@ public class SheetListAdapter<T> extends Adapter<SheetListAdapter.ViewHolder<T>>
         mListener = listener;
     }
 
+    protected int getLayoutItemResId() {
+        return R.layout.item_sheet_list;
+    }
+
     @Override
     public int getItemCount() {
         return mList == null ? 0 : mList.size();
@@ -40,11 +44,11 @@ public class SheetListAdapter<T> extends Adapter<SheetListAdapter.ViewHolder<T>>
     @Override
     public ViewHolder<T> onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_sheet_list, parent, false);
+        View view = layoutInflater.inflate(getLayoutItemResId(), parent, false);
         return new ViewHolder<T>(view, mListener);
     }
 
-    static class ViewHolder<T> extends RecyclerView.ViewHolder {
+    public static class ViewHolder<T> extends RecyclerView.ViewHolder {
         private IItemClickListener<T> mListener;
         private TextView mTitle;
         private PraseHelper<T> mPraseHelper = new PraseHelper<>();

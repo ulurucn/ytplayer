@@ -121,10 +121,14 @@ public class YTPlayerSheetListView<T> extends YTPlayerListView<T> implements She
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setSmoothScrollbarEnabled(true);
         mSheetList.setLayoutManager(linearLayoutManager);
-        SheetListAdapter adapter = new SheetListAdapter<T>(list, this);
+        SheetListAdapter adapter = createSheetListAdapter(list);
         mSheetList.setAdapter(adapter);
 
         setBehaviorCallback();
+    }
+
+    protected SheetListAdapter<T> createSheetListAdapter(ArrayList<T> list) {
+        return new SheetListAdapter<T>(list, this);
     }
 
     private void setBehaviorCallback() {
