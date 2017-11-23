@@ -26,14 +26,17 @@ import vip.frendy.ytplayer.extension.PraseHelper;
  * Created by frendy on 2017/11/20.
  */
 
-public class YTPlayerSheetListView<T> extends YTPlayerView<T> implements SwipeItemClickListener, SheetListAdapter.IItemClickListener<T> {
+public class YTPlayerSheetListView<T> extends YTPlayerView<T> implements SheetListAdapter.IItemClickListener<T> {
     private static String TAG = "YTPlayerSheetListView";
 
     private LinearLayout mContent;
-    private BottomSheetDialog mBottomSheetDialog;
+    protected BottomSheetDialog mBottomSheetDialog;
+    protected RecyclerView mSheetList;
 
     private ImageButton mPlayNext, mPlayPrev;
-    private Button mSheetList;
+    private Button mBtnList;
+
+    private SheetListAdapter.IItemClickListener<T> mSheetItemClickListener;
 
     //播放列表
     protected ArrayList<T> mVideoList = new ArrayList<>();
@@ -59,6 +62,10 @@ public class YTPlayerSheetListView<T> extends YTPlayerView<T> implements SwipeIt
         return R.layout.yt_player_sheet_list_view;
     }
 
+    protected int getLayoutDialogSheetListResId() {
+        return R.layout.dialog_sheet_list;
+    }
+
     @Override
     protected void init(Context context) {
         super.init(context);
@@ -69,8 +76,8 @@ public class YTPlayerSheetListView<T> extends YTPlayerView<T> implements SwipeIt
         mPlayNext.setOnClickListener(this);
         mPlayPrev = findViewById(R.id.play_prev);
         mPlayPrev.setOnClickListener(this);
-        mSheetList = findViewById(R.id.sheet_list);
-        mSheetList.setOnClickListener(this);
+        mBtnList = findViewById(R.id.sheet_list);
+        mBtnList.setOnClickListener(this);
     }
 
     public void setVideoList(ArrayList<T> list) {
@@ -99,12 +106,6 @@ public class YTPlayerSheetListView<T> extends YTPlayerView<T> implements SwipeIt
             return false;
         }
         return super.onTouchEvent(event);
-    }
-
-    @Override
-    public void onItemClick(View itemView, int position) {
-        mIndex = position;
-        mWebView.loadVideoById(getVideoId(position));
     }
 
     @Override
@@ -186,16 +187,16 @@ public class YTPlayerSheetListView<T> extends YTPlayerView<T> implements SwipeIt
      */
     private void createBottomSheetDialog(ArrayList<T> list) {
         mBottomSheetDialog = new BottomSheetDialog(getContext());
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_sheet_list, null, false);
+        View view = LayoutInflater.from(getContext()).inflate(getLayoutDialogSheetListResId(), null, false);
         mBottomSheetDialog.setContentView(view);
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
+        mSheetList = (RecyclerView) view.findViewById(R.id.recyclerView);
+        mSheetList.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setSmoothScrollbarEnabled(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        mSheetList.setLayoutManager(linearLayoutManager);
         SheetListAdapter adapter = new SheetListAdapter<T>(list, this);
-        recyclerView.setAdapter(adapter);
+        mSheetList.setAdapter(adapter);
 
         setBehaviorCallback();
     }
@@ -221,6 +222,15 @@ public class YTPlayerSheetListView<T> extends YTPlayerView<T> implements SwipeIt
     @Override
     public void onItemClick(View view, int position, T data) {
         mIndex = position;
+        mBottomSheetDialog.dismiss();
         mWebView.loadVideoById(getVideoId(position));
+
+        if(mSheetItemClickListener != null) {
+            mSheetItemClickListener.onItemClick(view, position, data);
+        }
+    }
+
+    public void setSheetItemClickListener(SheetListAdapter.IItemClickListener<T> listener) {
+        mSheetItemClickListener = listener;
     }
 }
