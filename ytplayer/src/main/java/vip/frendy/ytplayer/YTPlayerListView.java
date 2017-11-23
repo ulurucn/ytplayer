@@ -5,15 +5,13 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ImageButton;
 
-import com.tmall.ultraviewpager.UltraViewPager;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 
 import java.util.ArrayList;
 
-import vip.frendy.ytplayer.adapter.YTPlayerPagerAdapter;
+import vip.frendy.ytplayer.extension.PraseHelper;
 
 /**
  * Created by frendy on 2017/11/19.
@@ -22,15 +20,21 @@ import vip.frendy.ytplayer.adapter.YTPlayerPagerAdapter;
 public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemClickListener {
     private static String TAG = "YTPlayerListView";
 
-    private LinearLayout mContentInfo;
-    private UltraViewPager mPager;
-    private YTPlayerPagerAdapter mAdapter;
-
-    private Button mPlayNext, mCueNext;
+    protected ImageButton mPlayNext, mPlayPrev;
 
     //播放列表
     protected ArrayList<T> mVideoList = new ArrayList<>();
     protected int mIndex = 0;
+    protected PraseHelper<T> mPraseHelper = new PraseHelper<>();
+
+    public enum PlayListState {
+        LIST_ORDER,
+        LIST_LOOP,
+        LIST_SHUFFLE,
+        SINGLE_LOOP
+    }
+    protected PlayListState mPlayListState = PlayListState.LIST_ORDER;
+
 
     public YTPlayerListView(Context context) {
         super(context);
@@ -53,40 +57,32 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
     protected void init(Context context) {
         super.init(context);
 
-        mContentInfo = findViewById(R.id.content);
-
-        mPager = findViewById(R.id.pager);
-        mPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL);
-
-        mAdapter = new YTPlayerPagerAdapter<T>(context, this);
-        mPager.setAdapter(mAdapter);
-        mPager.setInfiniteRatio(100);
-
-        mPager.initIndicator();
-        mPager.getIndicator().setOrientation(UltraViewPager.Orientation.HORIZONTAL);
-
         mPlayNext = findViewById(R.id.play_next);
         mPlayNext.setOnClickListener(this);
-        mCueNext = findViewById(R.id.cue_next);
-        mCueNext.setOnClickListener(this);
+        mPlayPrev = findViewById(R.id.play_prev);
+        mPlayPrev.setOnClickListener(this);
     }
 
     public void setVideoList(ArrayList<T> list) {
         mVideoList.clear();
         mVideoList.addAll(list);
-        mAdapter.initDataList(mVideoList);
+    }
+
+    public void playVideoListAt(int index) {
+        if(mVideoList.size() <= 0) return;
+
+        mIndex = index % mVideoList.size();
+        loadVideoById(mPraseHelper.getVideoId(mVideoList.get(mIndex)));
     }
 
     @Override
     public void rollout() {
         super.rollout();
-        mContentInfo.setVisibility(VISIBLE);
     }
 
     @Override
     public void rollup() {
         super.rollup();
-        mContentInfo.setVisibility(GONE);
     }
 
     @Override
@@ -109,22 +105,87 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
         super.onClick(view);
 
         if(view.getId() == R.id.play_next && mVideoList.size() > 0) {
-            mWebView.loadVideoById(getNextVideoId());
-        } else if(view.getId() == R.id.cue_next && mVideoList.size() > 0) {
-            mWebView.cueVideoById(getNextVideoId());
+            if(isVideoPlaying()) {
+                mWebView.loadVideoById(getNextVideoId());
+            } else {
+                mWebView.cueVideoById(getNextVideoId());
+            }
+        } else if(view.getId() == R.id.play_prev && mVideoList.size() > 0) {
+            if(isVideoPlaying()) {
+                mWebView.loadVideoById(getPrevVideoId());
+            } else {
+                mWebView.cueVideoById(getPrevVideoId());
+            }
         }
     }
 
     protected String getNextVideoId() {
-        T video = mVideoList.get((mIndex ++) % mVideoList.size());
+        T video = mVideoList.get((++ mIndex) % mVideoList.size());
 
-        return getVideoId(video);
+        return mPraseHelper.getVideoId(video);
+    }
+
+    protected String getPrevVideoId() {
+        T video = mVideoList.get((-- mIndex) % mVideoList.size());
+
+        return mPraseHelper.getVideoId(video);
     }
 
     protected String getVideoId(int position) {
         T video = mVideoList.get(position);
 
-        return getVideoId(video);
+        return mPraseHelper.getVideoId(video);
+    }
+
+    public void setPlayListState(PlayListState state) {
+        mPlayListState = state;
+    }
+
+    @Override
+    public void onVideoEnd() {
+        super.onVideoEnd();
+
+        switch (mPlayListState) {
+            case LIST_ORDER:
+                mWebView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(mIndex < (mVideoList.size() - 1)) {
+                            mWebView.loadVideoById(getNextVideoId());
+                        } else {
+                            mWebView.cueVideoById(getNextVideoId());
+                        }
+                    }
+                }, 100);
+                break;
+            case LIST_LOOP:
+                mWebView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mWebView.loadVideoById(getNextVideoId());
+                    }
+                }, 100);
+                break;
+            case LIST_SHUFFLE:
+                mWebView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mIndex = mPraseHelper.getRandomIndex(mIndex, mVideoList.size());
+                        mWebView.loadVideoById(mPraseHelper.getVideoId(mVideoList.get(mIndex)));
+                    }
+                }, 100);
+                break;
+            case SINGLE_LOOP:
+                mWebView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mWebView.loadVideoById(mPraseHelper.getVideoId(mVideoList.get(mIndex)));
+                    }
+                }, 100);
+                break;
+            default:
+                break;
+        }
     }
 
     // 增
@@ -139,7 +200,7 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
     public void removeVideos(ArrayList<T> videos) {
         for(T video : videos) {
             for(T item : mVideoList) {
-                if(getVideoId(video).equals(getVideoId(item))) {
+                if(mPraseHelper.getVideoId(video).equals(mPraseHelper.getVideoId(item))) {
                     mVideoList.remove(item);
                     break;
                 }

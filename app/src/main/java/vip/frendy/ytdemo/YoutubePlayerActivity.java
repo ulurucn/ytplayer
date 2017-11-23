@@ -9,8 +9,8 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import vip.frendy.ytplayer.YTPlayerListView;
 import vip.frendy.ytplayer.YTPlayerManager;
-import vip.frendy.ytplayer.YTPlayerSheetListView;
 
 /**
  * Created by frendy on 2017/11/17.
@@ -18,7 +18,7 @@ import vip.frendy.ytplayer.YTPlayerSheetListView;
 
 public class YoutubePlayerActivity extends Activity {
 
-    private YTPlayerSheetListView<String> mPlayerView;
+    private YTPlayerListView<String> mPlayerView;
 
     private ArrayList<String> mVideoIds = new ArrayList<String>() {{
         //dmLSM9zM0ME - 59 secs video
@@ -44,7 +44,8 @@ public class YoutubePlayerActivity extends Activity {
 
         mPlayerView.attachWebView(YTPlayerManager.getInstance().getWebView());
         mPlayerView.setVideoList(mVideoIds);
-        mPlayerView.loadVideoById("3tmd-ClpJxA");
+        mPlayerView.playVideoListAt(4);
+        mPlayerView.setPlayListState(YTPlayerListView.PlayListState.SINGLE_LOOP);
 
         findViewById(R.id.roll).setOnClickListener(new View.OnClickListener() {
             @Override

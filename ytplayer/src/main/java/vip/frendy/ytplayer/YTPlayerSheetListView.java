@@ -15,8 +15,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
-
 import java.util.ArrayList;
 
 import vip.frendy.ytplayer.adapter.SheetListAdapter;
@@ -26,7 +24,7 @@ import vip.frendy.ytplayer.extension.PraseHelper;
  * Created by frendy on 2017/11/20.
  */
 
-public class YTPlayerSheetListView<T> extends YTPlayerView<T> implements SheetListAdapter.IItemClickListener<T> {
+public class YTPlayerSheetListView<T> extends YTPlayerListView<T> implements SheetListAdapter.IItemClickListener<T> {
     private static String TAG = "YTPlayerSheetListView";
 
     private LinearLayout mContent;
@@ -37,12 +35,6 @@ public class YTPlayerSheetListView<T> extends YTPlayerView<T> implements SheetLi
     private Button mBtnList;
 
     private SheetListAdapter.IItemClickListener<T> mSheetItemClickListener;
-
-    //播放列表
-    protected ArrayList<T> mVideoList = new ArrayList<>();
-    protected int mIndex = 0;
-
-    private PraseHelper<T> mPraseHelper = new PraseHelper<>();
 
 
     public YTPlayerSheetListView(Context context) {
@@ -72,17 +64,12 @@ public class YTPlayerSheetListView<T> extends YTPlayerView<T> implements SheetLi
 
         mContent = findViewById(R.id.content);
 
-        mPlayNext = findViewById(R.id.play_next);
-        mPlayNext.setOnClickListener(this);
-        mPlayPrev = findViewById(R.id.play_prev);
-        mPlayPrev.setOnClickListener(this);
         mBtnList = findViewById(R.id.sheet_list);
         mBtnList.setOnClickListener(this);
     }
 
     public void setVideoList(ArrayList<T> list) {
-        mVideoList.clear();
-        mVideoList.addAll(list);
+        super.setVideoList(list);
 
         createBottomSheetDialog(mVideoList);
     }
@@ -112,74 +99,13 @@ public class YTPlayerSheetListView<T> extends YTPlayerView<T> implements SheetLi
     public void onClick(View view) {
         super.onClick(view);
 
-        if(view.getId() == R.id.play_next && mVideoList.size() > 0) {
-            if(isVideoPlaying()) {
-                mWebView.loadVideoById(getNextVideoId());
-            } else {
-                mWebView.cueVideoById(getNextVideoId());
-            }
-        } else if(view.getId() == R.id.play_prev && mVideoList.size() > 0) {
-            if(isVideoPlaying()) {
-                mWebView.loadVideoById(getPrevVideoId());
-            } else {
-                mWebView.cueVideoById(getPrevVideoId());
-            }
-        } else if(view.getId() == R.id.sheet_list) {
+        if(view.getId() == R.id.sheet_list) {
             if (mBottomSheetDialog.isShowing()) {
                 mBottomSheetDialog.dismiss();
             } else {
                 mBottomSheetDialog.show();
             }
         }
-    }
-
-    protected String getNextVideoId() {
-        T video = mVideoList.get((++ mIndex) % mVideoList.size());
-
-        return getVideoId(video);
-    }
-
-    protected String getPrevVideoId() {
-        mIndex = mIndex + mVideoList.size();
-        T video = mVideoList.get((-- mIndex) % mVideoList.size());
-
-        return getVideoId(video);
-    }
-
-    protected String getVideoId(int position) {
-        T video = mVideoList.get(position);
-
-        return getVideoId(video);
-    }
-
-    // 增
-    public void addVideos(ArrayList<T> videos) {
-        ArrayList<T> list = new ArrayList<>();
-        list.addAll(mVideoList);
-        list.addAll(videos);
-        setVideoList(list);
-    }
-
-    // 删
-    public void removeVideos(ArrayList<T> videos) {
-        for(T video : videos) {
-            for(T item : mVideoList) {
-                if(getVideoId(video).equals(getVideoId(item))) {
-                    mVideoList.remove(item);
-                    break;
-                }
-            }
-        }
-    }
-
-    // 改
-    public void updateVideo(String video) {
-
-    }
-
-    // 查
-    public ArrayList<T> queryVideos() {
-        return new ArrayList<>();
     }
 
     /**

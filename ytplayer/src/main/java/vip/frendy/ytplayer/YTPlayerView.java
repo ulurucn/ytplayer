@@ -321,14 +321,4 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
             }
         }
     }
-
-    protected String getVideoId(T video) {
-        if(video instanceof String) {
-            return (String) video;
-        } else if(video instanceof PlaylistItems) {
-            return ((PlaylistItems) video).getSnippet().getResourceId().getVideoId();
-        } else {
-            return "";
-        }
-    }
 }

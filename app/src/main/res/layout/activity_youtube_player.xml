@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <vip.frendy.ytplayer.YTPlayerSheetListView
+    <vip.frendy.ytplayer.YTPlayerListView
         android:id="@+id/player_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </vip.frendy.ytplayer.YTPlayerSheetListView>
+    </vip.frendy.ytplayer.YTPlayerListView>
 
     <LinearLayout
         android:layout_width="match_parent"
