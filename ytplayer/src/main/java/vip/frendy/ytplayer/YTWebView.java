@@ -35,7 +35,7 @@ import static vip.frendy.ytplayer.Contants.DEBUG;
 
 public class YTWebView extends WebView {
     public String TAG = "YTWebView";
-    public static boolean BASEURL_VERSION = false;
+    public static boolean BASEURL_VERSION = true;
 
     private Context mContext;
     protected boolean isProceedTouchEvent = false;
