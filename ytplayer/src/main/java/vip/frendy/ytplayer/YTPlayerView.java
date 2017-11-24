@@ -22,7 +22,7 @@ import static vip.frendy.ytplayer.Contants.DEBUG;
  */
 
 public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View.OnClickListener {
-    private static String TAG = "YTPlayerView";
+    protected static String TAG = "YTPlayerView";
 
     protected ImageButton mPlayPause;
     protected PlayerState mState = PlayerState.ENDED;
@@ -30,9 +30,9 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
         ENDED, PLAYING, PAUSED, BUFFERING, CUED
     };
 
-    private final static int MAX = 1000;
-    private SeekBar mSeekBar;
-    private float totalVideoDuration;
+    protected final static int MAX = 1000;
+    protected SeekBar mSeekBar;
+    protected float totalVideoDuration;
 
     protected LinearLayout mContent;
     protected YTWebView mWebView;
@@ -247,6 +247,7 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
         }
 
         totalVideoDuration = total;
+        changeSeekBar(current);
         updatePlayPuaseButton(mState);
     }
 
@@ -271,7 +272,7 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
     }
 
 
-    private void changeSeekBar(float time){
+    protected void changeSeekBar(float time){
         float progress =  (time/totalVideoDuration) * 1000;
         final double d = Math.ceil(progress);
 
@@ -285,7 +286,7 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
         });
     }
 
-    private void setSeekBar(final String flag){
+    protected void setSeekBar(final String flag){
         HandlerExt.postToUI(new Runnable() {
             @Override
             public void run() {
