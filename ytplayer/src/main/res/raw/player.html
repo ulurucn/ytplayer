@@ -197,7 +197,7 @@
 
 		function checkVideoState() {
 			console.log("[JS] Check video state");
-			window.android.onVideoStateCheckResult(player.getPlayerState());
+			window.android.onVideoStateCheckResult(player.getPlayerState(), player.getDuration(), player.getCurrentTime());
 		}
 
 		function setSize(w, h) {

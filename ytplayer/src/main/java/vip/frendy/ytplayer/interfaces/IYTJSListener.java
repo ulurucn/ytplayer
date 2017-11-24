@@ -26,7 +26,7 @@ public interface IYTJSListener {
 
     void onVideoCued();
 
-    void onVideoStateCheckResult(int state);
+    void onVideoStateCheckResult(int state, float current, float total);
 
     void onApiChange();
 

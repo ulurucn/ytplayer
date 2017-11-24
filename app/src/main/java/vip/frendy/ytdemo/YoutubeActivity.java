@@ -206,7 +206,7 @@ public class YoutubeActivity extends Activity implements IYTJSListener {
 	}
 
 	@Override
-	public void onVideoStateCheckResult(int state) {
+	public void onVideoStateCheckResult(int state, float current, float total) {
 
 	}
 

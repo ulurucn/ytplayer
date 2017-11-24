@@ -114,9 +114,9 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
     }
 
     @Override
-    public void onVideoStateCheckResult(int state) {
+    public void onVideoStateCheckResult(int state, float current, float total) {
         if(mClientListener != null)
-            mClientListener.onVideoStateCheckResult(state);
+            mClientListener.onVideoStateCheckResult(state, current, total);
     }
 
     @Override

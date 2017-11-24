@@ -72,8 +72,8 @@ public class YTJSInterface {
     }
 
     @JavascriptInterface
-    public void onVideoStateCheckResult(int state) {
-        listener.onVideoStateCheckResult(state);
+    public void onVideoStateCheckResult(int state, float current, float total) {
+        listener.onVideoStateCheckResult(state, current, total);
     }
 
     @JavascriptInterface

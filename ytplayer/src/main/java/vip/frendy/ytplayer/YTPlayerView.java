@@ -190,11 +190,7 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
 
     @Override
     public void updateTotalVideoDuration(float duration) {
-        try {
-            totalVideoDuration = duration;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        totalVideoDuration = duration;
     }
 
     @Override
@@ -239,7 +235,7 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
     }
 
     @Override
-    public void onVideoStateCheckResult(int state) {
+    public void onVideoStateCheckResult(int state, float current, float total) {
         switch (state) {
             case -1: break;
             case 0: mState = PlayerState.ENDED; break;
@@ -249,6 +245,9 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
             case 5: mState = PlayerState.CUED; break;
             default: break;
         }
+
+        totalVideoDuration = total;
+        updatePlayPuaseButton(mState);
     }
 
     @Override
@@ -296,7 +295,7 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
         });
     }
 
-    private void updatePlayPuaseButton(final PlayerState state) {
+    protected void updatePlayPuaseButton(final PlayerState state) {
         if(mPlayPause == null) return;
 
         HandlerExt.postToUI(new Runnable() {
