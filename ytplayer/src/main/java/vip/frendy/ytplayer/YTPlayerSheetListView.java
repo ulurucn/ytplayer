@@ -27,14 +27,13 @@ import vip.frendy.ytplayer.extension.PraseHelper;
 public class YTPlayerSheetListView<T> extends YTPlayerListView<T> implements SheetListAdapter.IItemClickListener<T> {
     private static String TAG = "YTPlayerSheetListView";
 
-    private LinearLayout mContent;
+    protected LinearLayout mContent;
     protected BottomSheetDialog mBottomSheetDialog;
     protected RecyclerView mSheetList;
 
-    private ImageButton mPlayNext, mPlayPrev;
-    private Button mBtnList;
+    protected Button mBtnList;
 
-    private SheetListAdapter.IItemClickListener<T> mSheetItemClickListener;
+    protected SheetListAdapter.IItemClickListener<T> mSheetItemClickListener;
 
 
     public YTPlayerSheetListView(Context context) {
@@ -111,7 +110,7 @@ public class YTPlayerSheetListView<T> extends YTPlayerListView<T> implements She
     /**
      * 列表
      */
-    private void createBottomSheetDialog(ArrayList<T> list) {
+    protected void createBottomSheetDialog(ArrayList<T> list) {
         mBottomSheetDialog = new BottomSheetDialog(getContext());
         View view = LayoutInflater.from(getContext()).inflate(getLayoutDialogSheetListResId(), null, false);
         mBottomSheetDialog.setContentView(view);
@@ -131,7 +130,7 @@ public class YTPlayerSheetListView<T> extends YTPlayerListView<T> implements She
         return new SheetListAdapter<T>(list, this);
     }
 
-    private void setBehaviorCallback() {
+    protected void setBehaviorCallback() {
         View view = mBottomSheetDialog.getDelegate().findViewById(android.support.design.R.id.design_bottom_sheet);
         final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(view);
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
