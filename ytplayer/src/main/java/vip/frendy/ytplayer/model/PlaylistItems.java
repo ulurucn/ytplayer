@@ -1,10 +1,12 @@
 package vip.frendy.ytplayer.model;
 
+import java.io.Serializable;
+
 /**
  * Created by frendy on 2017/11/14.
  */
 
-public class PlaylistItems {
+public class PlaylistItems implements Serializable {
 
     /**
      * kind : youtube#playlistItem
@@ -50,7 +52,7 @@ public class PlaylistItems {
         this.snippet = snippet;
     }
 
-    public static class SnippetBean {
+    public static class SnippetBean implements Serializable {
         /**
          * publishedAt : 2017-11-14T08:33:36.000Z
          * channelId : UC-9-kyTW8ZkZNDHQJ6FgpwQ
@@ -145,7 +147,7 @@ public class PlaylistItems {
             this.resourceId = resourceId;
         }
 
-        public static class ThumbnailsBean {
+        public static class ThumbnailsBean implements Serializable {
             /**
              * default : {"url":"https://i.ytimg.com/vi/H6SShCF58-U/default.jpg","width":120,"height":90}
              * medium : {"url":"https://i.ytimg.com/vi/H6SShCF58-U/mqdefault.jpg","width":320,"height":180}
@@ -200,7 +202,7 @@ public class PlaylistItems {
                 this.maxres = maxres;
             }
 
-            public static class DefaultBean {
+            public static class DefaultBean implements Serializable {
                 /**
                  * url : https://i.ytimg.com/vi/H6SShCF58-U/default.jpg
                  * width : 120
@@ -236,7 +238,7 @@ public class PlaylistItems {
                 }
             }
 
-            public static class MediumBean {
+            public static class MediumBean implements Serializable {
                 /**
                  * url : https://i.ytimg.com/vi/H6SShCF58-U/mqdefault.jpg
                  * width : 320
@@ -272,7 +274,7 @@ public class PlaylistItems {
                 }
             }
 
-            public static class HighBean {
+            public static class HighBean implements Serializable {
                 /**
                  * url : https://i.ytimg.com/vi/H6SShCF58-U/hqdefault.jpg
                  * width : 480
@@ -308,7 +310,7 @@ public class PlaylistItems {
                 }
             }
 
-            public static class StandardBean {
+            public static class StandardBean implements Serializable {
                 /**
                  * url : https://i.ytimg.com/vi/H6SShCF58-U/sddefault.jpg
                  * width : 640
@@ -344,7 +346,7 @@ public class PlaylistItems {
                 }
             }
 
-            public static class MaxresBean {
+            public static class MaxresBean implements Serializable {
                 /**
                  * url : https://i.ytimg.com/vi/H6SShCF58-U/maxresdefault.jpg
                  * width : 1280
@@ -381,7 +383,7 @@ public class PlaylistItems {
             }
         }
 
-        public static class ResourceIdBean {
+        public static class ResourceIdBean implements Serializable {
             /**
              * kind : youtube#video
              * videoId : H6SShCF58-U

@@ -1,12 +1,13 @@
 package vip.frendy.ytplayer.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by frendy on 2017/11/14.
  */
 
-public class Playlist {
+public class Playlist implements Serializable {
 
     /**
      * kind : youtube#playlistItemListResponse
@@ -62,7 +63,7 @@ public class Playlist {
         this.items = items;
     }
 
-    public static class PageInfoBean {
+    public static class PageInfoBean implements Serializable {
         /**
          * totalResults : 200
          * resultsPerPage : 50
