@@ -16,15 +16,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import vip.frendy.ytdemo.adapter.ListAdapter;
+import vip.frendy.ytdemo.adapter.ListAdapter2;
+import vip.frendy.ytdemo.view.ActionMenu;
+import vip.frendy.ytdemo.view.ActionMenuManager;
 
 /**
  * Created by frendy on 2017/11/18.
  */
 
-public class DemoListFragment2 extends RefreshListFragment {
+public class DemoListFragment2 extends RefreshListFragment implements ActionMenu.OnMenuItemClickListener {
 
-    protected ListAdapter mAdapter;
+    protected ListAdapter2 mAdapter;
     protected ArrayList<String> mDataList = new ArrayList<>();
 
     protected ArrayList<String> createDataList(int start) {
@@ -40,10 +42,22 @@ public class DemoListFragment2 extends RefreshListFragment {
         super.onViewCreated(view, savedInstanceState);
 
         mDataList.addAll(createDataList(0));
-        mAdapter = new ListAdapter();
+        mAdapter = new ListAdapter2(new ListAdapter2.IMoreClickListener() {
+            @Override
+            public void onMoreClick(View v, int position) {
+                ActionMenuManager.getInstance().toggleActionMenuFromView(v, position, DemoListFragment2.this);
+            }
+        });
 
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged(mDataList);
+
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                ActionMenuManager.getInstance().onScrolled(recyclerView, dx, dy);
+            }
+        });
     }
 
     @Override
@@ -114,5 +128,10 @@ public class DemoListFragment2 extends RefreshListFragment {
                 }, 1000);
             }
         };
+    }
+
+    @Override
+    public void onDelClicked(int feedItem) {
+        ActionMenuManager.getInstance().hideActionMenu();
     }
 }
