@@ -27,7 +27,6 @@ import vip.frendy.ytplayer.extension.PraseHelper;
 public class YTPlayerSheetListView<T> extends YTPlayerListView<T> implements SheetListAdapter.IItemClickListener<T> {
     private static String TAG = "YTPlayerSheetListView";
 
-    protected LinearLayout mSheetContent;
     protected BottomSheetDialog mBottomSheetDialog;
     protected RecyclerView mSheetList;
 
@@ -61,8 +60,6 @@ public class YTPlayerSheetListView<T> extends YTPlayerListView<T> implements She
     protected void init(Context context) {
         super.init(context);
 
-        mSheetContent = findViewById(R.id.sheet_content);
-
         mBtnList = findViewById(R.id.sheet_list);
         mBtnList.setOnClickListener(this);
     }
@@ -76,13 +73,11 @@ public class YTPlayerSheetListView<T> extends YTPlayerListView<T> implements She
     @Override
     public void rollout() {
         super.rollout();
-        mSheetContent.setVisibility(VISIBLE);
     }
 
     @Override
     public void rollup() {
         super.rollup();
-        mSheetContent.setVisibility(GONE);
     }
 
     @Override
