@@ -79,6 +79,10 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
         mIndex = index % mVideoList.size();
     }
 
+    public int getPlayingVideoIndex() {
+        return mIndex;
+    }
+
     @Override
     public void rollout() {
         super.rollout();
