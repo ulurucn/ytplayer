@@ -1,12 +1,52 @@
 package vip.frendy.ytplayer.model;
 
+import android.content.Context;
+
+import com.litesuits.orm.db.annotation.PrimaryKey;
+import com.litesuits.orm.db.annotation.Table;
+import com.litesuits.orm.db.assit.QueryBuilder;
+import com.litesuits.orm.db.enums.AssignType;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by frendy on 2017/11/14.
  */
 
+@Table("play_list_items")
 public class PlaylistItems implements Serializable {
+
+    /**
+     * DB impl
+     */
+    public static void save(Context context, PlaylistItems data) {
+        if(context != null) {
+            DBManager.getInstance(context).save(data);
+        }
+    }
+
+    public static ArrayList<PlaylistItems> queryAll(Context context) {
+        if(context != null) {
+            return DBManager.getInstance(context).query(
+                    new QueryBuilder<>(PlaylistItems.class));
+        }
+        return new ArrayList<>();
+    }
+
+    public static void deleteAll(Context context) {
+        if(context != null) {
+            DBManager.getInstance(context).deleteAll(PlaylistItems.class);
+        }
+    }
+
+    public static void delete(Context context, ArrayList<PlaylistItems> datas) {
+        if(context == null || datas == null || datas.isEmpty()) return;
+
+        for(PlaylistItems data : datas) {
+            DBManager.getInstance(context).delete(data);
+        }
+    }
 
     /**
      * kind : youtube#playlistItem
@@ -17,7 +57,10 @@ public class PlaylistItems implements Serializable {
 
     private String kind;
     private String etag;
+
+    @PrimaryKey(AssignType.BY_MYSELF)
     private String id;
+
     private SnippetBean snippet;
 
     public String getKind() {
