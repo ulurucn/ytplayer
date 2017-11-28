@@ -131,6 +131,14 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
         mWebView.clearVideo();
     }
 
+    public void pauseVideo() {
+        mWebView.pauseVideo();
+    }
+
+    public void playVideo() {
+        mWebView.playVideo();
+    }
+
     public void setSize(int w, int h) {
         mWebView.setSize(w, h);
     }
@@ -172,6 +180,10 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
 
     public boolean isVideoBuffering() {
         return mState == PlayerState.BUFFERING;
+    }
+
+    public boolean isVideoPaused() {
+        return mState == PlayerState.PAUSED;
     }
 
     @Override
