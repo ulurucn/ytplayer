@@ -24,6 +24,7 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
     private YTWebView mWebView;
     private boolean hasLoadDefault = false;
     private IYTJSListener mClientListener;
+    private IYTJSListener mManagerListener;
 
     public void init(Context context) {
         mWebView = new YTWebView(context);
@@ -53,93 +54,131 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
         mClientListener = null;
     }
 
+    public void attachManagerListener(IYTJSListener listener) {
+        mManagerListener = listener;
+    }
+
+    public void detachManagerListener() {
+        mManagerListener = null;
+    }
+
     @Override
     public void onYouTubeIframeAPIReady() {
         if(mClientListener != null)
             mClientListener.onYouTubeIframeAPIReady();
+        if(mManagerListener != null)
+            mManagerListener.onYouTubeIframeAPIReady();
     }
 
     @Override
     public void updateVideoDuration(float duration) {
         if(mClientListener != null)
             mClientListener.updateVideoDuration(duration);
+        if(mManagerListener != null)
+            mManagerListener.updateVideoDuration(duration);
     }
 
     @Override
     public void updateTotalVideoDuration(float duration) {
         if(mClientListener != null)
             mClientListener.updateTotalVideoDuration(duration);
+        if(mManagerListener != null)
+            mManagerListener.updateTotalVideoDuration(duration);
     }
 
     @Override
     public void onReady() {
         if(mClientListener != null)
             mClientListener.onReady();
+        if(mManagerListener != null)
+            mManagerListener.onReady();
     }
 
     @Override
     public void onVideoUnStarted() {
         if(mClientListener != null)
             mClientListener.onVideoUnStarted();
+        if(mManagerListener != null)
+            mManagerListener.onVideoUnStarted();
     }
 
     @Override
     public void onVideoEnd() {
         if(mClientListener != null)
             mClientListener.onVideoEnd();
+        if(mManagerListener != null)
+            mManagerListener.onVideoEnd();
     }
 
     @Override
     public void onVideoPlaying() {
         if(mClientListener != null)
             mClientListener.onVideoPlaying();
+        if(mManagerListener != null)
+            mManagerListener.onVideoPlaying();
     }
 
     @Override
     public void onVideoPaused() {
         if(mClientListener != null)
             mClientListener.onVideoPaused();
+        if(mManagerListener != null)
+            mManagerListener.onVideoPaused();
     }
 
     @Override
     public void onVideoBuffering() {
         if(mClientListener != null)
             mClientListener.onVideoBuffering();
+        if(mManagerListener != null)
+            mManagerListener.onVideoBuffering();
     }
 
     @Override
     public void onVideoCued() {
         if(mClientListener != null)
             mClientListener.onVideoCued();
+        if(mManagerListener != null)
+            mManagerListener.onVideoCued();
     }
 
     @Override
     public void onVideoStateCheckResult(int state, float current, float total) {
         if(mClientListener != null)
             mClientListener.onVideoStateCheckResult(state, current, total);
+        if(mManagerListener != null)
+            mManagerListener.onVideoStateCheckResult(state, current, total);
     }
 
     @Override
     public void onApiChange() {
         if(mClientListener != null)
             mClientListener.onApiChange();
+        if(mManagerListener != null)
+            mManagerListener.onApiChange();
     }
 
     @Override
     public void onError(int error) {
         if(mClientListener != null)
             mClientListener.onError(error);
+        if(mManagerListener != null)
+            mManagerListener.onError(error);
     }
 
     @Override
     public void onPlaybackRateChange(double rate) {
         if(mClientListener != null)
             mClientListener.onPlaybackRateChange(rate);
+        if(mManagerListener != null)
+            mManagerListener.onPlaybackRateChange(rate);
     }
 
     @Override
     public void onPlaybackQualityChange(int playbackQuality) {
         if(mClientListener != null)
             mClientListener.onPlaybackQualityChange(playbackQuality);
+        if(mManagerListener != null)
+            mManagerListener.onPlaybackQualityChange(playbackQuality);
     }
 }
