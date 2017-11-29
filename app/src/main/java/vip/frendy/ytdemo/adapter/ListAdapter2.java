@@ -1,10 +1,12 @@
 package vip.frendy.ytdemo.adapter;
 
+import android.graphics.ColorMatrixColorFilter;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -53,6 +55,8 @@ public class ListAdapter2 extends RecyclerView.Adapter<ListAdapter2.ViewHolder> 
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             mMore = itemView.findViewById(R.id.more);
             mMoreListener = listener;
+
+            setIconColor(mMore, 255, 0, 0, 255);
         }
 
         public void setData(String title) {
@@ -64,6 +68,16 @@ public class ListAdapter2 extends RecyclerView.Adapter<ListAdapter2.ViewHolder> 
                     mMoreListener.onMoreClick(view, getPosition());
                 }
             });
+        }
+
+        private void setIconColor(ImageButton icon, int r, int g, int b, int a) {
+            float[] colorMatrix = new float[]{
+                    0, 0, 0, 0, r,
+                    0, 0, 0, 0, g,
+                    0, 0, 0, 0, b,
+                    0, 0, 0, (float) a / 255, 0
+            };
+            icon.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
         }
     }
 
