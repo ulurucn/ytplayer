@@ -128,13 +128,15 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
     }
 
     protected String getNextVideoId() {
-        T video = mVideoList.get((++ mIndex) % mVideoList.size());
+        mIndex = (++ mIndex) % mVideoList.size();
+        T video = mVideoList.get(mIndex);
 
         return mPraseHelper.getVideoId(video);
     }
 
     protected String getPrevVideoId() {
-        T video = mVideoList.get((-- mIndex) % mVideoList.size());
+        mIndex = (-- mIndex + mVideoList.size()) % mVideoList.size();
+        T video = mVideoList.get(mIndex);
 
         return mPraseHelper.getVideoId(video);
     }
