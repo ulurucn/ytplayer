@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -16,7 +17,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import vip.frendy.ytdemo.R;
 import vip.frendy.ytdemo.adapter.ListAdapter2;
+import vip.frendy.ytdemo.utils.ImageViewExt;
 import vip.frendy.ytdemo.view.ActionMenu;
 import vip.frendy.ytdemo.view.ActionMenuManager;
 
@@ -58,6 +61,12 @@ public class DemoListFragment2 extends RefreshListFragment implements ActionMenu
                 ActionMenuManager.getInstance().onScrolled(recyclerView, dx, dy);
             }
         });
+
+        String url = "http://b.hiphotos.baidu.com/image/pic/item/77c6a7efce1b9d16fcdf2c8ff9deb48f8d5464c7.jpg";
+        String url2 = "http://e.hiphotos.baidu.com/image/pic/item/5bafa40f4bfbfbed9feeb69372f0f736aec31fa2.jpg";
+        ImageView background = mRootView.findViewById(R.id.background);
+        background.setVisibility(View.VISIBLE);
+        ImageViewExt.loadImageBlurAndFilter(view.getContext(), url, background);
     }
 
     @Override

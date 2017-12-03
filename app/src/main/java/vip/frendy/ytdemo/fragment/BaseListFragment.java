@@ -21,7 +21,7 @@ import vip.frendy.ytdemo.R;
  */
 
 public abstract class BaseListFragment extends Fragment {
-    private View mRootView;
+    protected View mRootView;
 
     protected SmartRefreshLayout mRefreshLayout;
     protected SwipeMenuRecyclerView mRecyclerView;
