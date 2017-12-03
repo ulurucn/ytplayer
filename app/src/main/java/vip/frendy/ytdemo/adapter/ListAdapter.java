@@ -12,6 +12,7 @@ import java.util.List;
 import vip.frendy.ytdemo.R;
 import vip.frendy.ytdemo.utils.AnimationExt;
 import vip.frendy.ytdemo.utils.VibratorExt;
+import vip.frendy.ytplayer.extension.HandlerExt;
 
 /**
  * Created by frendy on 2017/11/18.
@@ -47,6 +48,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         public ViewHolder(View itemView) {
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
+            tvTitle.setVisibility(View.GONE);
             mMore = itemView.findViewById(R.id.more);
         }
 
@@ -56,8 +58,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             mMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mMore.setVisibility(View.GONE);
-                    AnimationExt.doAnimation(mMore, R.anim.anim_alpha);
+                    tvTitle.setVisibility(View.VISIBLE);
+                    AnimationExt.doAnimation(tvTitle, R.anim.anim_alpha_show);
+                    HandlerExt.postDelayToUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            tvTitle.setVisibility(View.GONE);
+                            AnimationExt.doAnimation(tvTitle, R.anim.anim_alpha_dismiss);
+                        }
+                    }, 3000L);
                     VibratorExt.playShort(mMore.getContext());
                 }
             });
