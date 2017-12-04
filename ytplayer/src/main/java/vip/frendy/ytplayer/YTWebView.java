@@ -279,7 +279,7 @@ public class YTWebView extends WebView {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(isProceedTouchEvent) {
-            super.onTouchEvent(event);
+            //super.onTouchEvent(event);
             return false;
         }
         return super.onTouchEvent(event);

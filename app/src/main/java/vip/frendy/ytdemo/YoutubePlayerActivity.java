@@ -45,6 +45,7 @@ public class YoutubePlayerActivity extends Activity {
         YTPlayerManager.getInstance().attachListener(mPlayerView);
 
         mPlayerView.attachWebView(YTPlayerManager.getInstance().getWebView());
+        mPlayerView.setProceedTouchEvent(true);
         mPlayerView.setVideoList(mVideoIds);
         mPlayerView.playVideoListAt(4);
         mPlayerView.setPlayListState(YTPlayerListView.PlayListState.SINGLE_LOOP);
