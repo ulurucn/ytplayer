@@ -325,7 +325,7 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.play_pause) {
+        if(view.getId() == R.id.play_pause && mWebView != null) {
             if(mState == PlayerState.PLAYING || mState == PlayerState.BUFFERING) {
                 mWebView.pauseVideo();
             } else {

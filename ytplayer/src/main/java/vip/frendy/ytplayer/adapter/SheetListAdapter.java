@@ -19,8 +19,8 @@ import vip.frendy.ytplayer.extension.PraseHelper;
 
 public class SheetListAdapter<T> extends Adapter<SheetListAdapter.ViewHolder<T>> {
 
-    private ArrayList<T> mList;
-    private IItemClickListener<T> mListener;
+    protected ArrayList<T> mList;
+    protected IItemClickListener<T> mListener;
 
     public SheetListAdapter(ArrayList<T> list, IItemClickListener<T> listener) {
         mList = list;
