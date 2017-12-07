@@ -63,6 +63,8 @@ public class PlaylistItems implements Serializable {
 
     private SnippetBean snippet;
 
+    private int state = 0;
+
     public String getKind() {
         return kind;
     }
@@ -93,6 +95,14 @@ public class PlaylistItems implements Serializable {
 
     public void setSnippet(SnippetBean snippet) {
         this.snippet = snippet;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 
     public static class SnippetBean implements Serializable {
