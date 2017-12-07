@@ -53,6 +53,10 @@ public class SheetListAdapter<T> extends Adapter<SheetListAdapter.ViewHolder<T>>
         private TextView mTitle;
         private PraseHelper<T> mPraseHelper = new PraseHelper<>();
 
+        public ViewHolder(View itemView) {
+            super(itemView);
+        }
+
         public ViewHolder(View itemView, final IItemClickListener<T> listener) {
             super(itemView);
             mListener = listener;
