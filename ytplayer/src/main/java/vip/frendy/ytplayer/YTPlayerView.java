@@ -41,6 +41,8 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
 
     protected boolean isProceedTouchEvent = false;
 
+    protected ICheckVideoStateListener mCheckVideoStateListener;
+
 
     public YTPlayerView(Context context) {
         super(context);
@@ -246,6 +248,13 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
         updatePlayPuaseButton(mState);
     }
 
+    public void checkVideoState(ICheckVideoStateListener listener) {
+        mCheckVideoStateListener = listener;
+        if(mWebView != null) {
+            mWebView.checkVideoState();
+        }
+    }
+
     @Override
     public void onVideoStateCheckResult(int state, float current, float total) {
         switch (state) {
@@ -261,6 +270,11 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
         totalVideoDuration = total;
         changeSeekBar(current);
         updatePlayPuaseButton(mState);
+
+        if(mCheckVideoStateListener != null) {
+            mCheckVideoStateListener.onResult(mState);
+            mCheckVideoStateListener = null;
+        }
     }
 
     @Override
@@ -332,5 +346,9 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
                 mWebView.playVideo();
             }
         }
+    }
+
+    public interface ICheckVideoStateListener {
+        void onResult(PlayerState state);
     }
 }
