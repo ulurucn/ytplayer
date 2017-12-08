@@ -42,6 +42,7 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
     protected boolean isProceedTouchEvent = false;
 
     protected ICheckVideoStateListener mCheckVideoStateListener;
+    protected IQualityChangeListener mQualityChangeListener;
 
 
     public YTPlayerView(Context context) {
@@ -299,7 +300,8 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
 
     @Override
     public void onPlaybackQualityChange(int playbackQuality) {
-
+        if(mQualityChangeListener != null)
+            mQualityChangeListener.onQualityChange(playbackQuality);
     }
 
 
@@ -353,7 +355,15 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
         }
     }
 
+    public void setQualityChangeListener(IQualityChangeListener listener) {
+        this.mQualityChangeListener = listener;
+    }
+
     public interface ICheckVideoStateListener {
         void onResult(PlayerState state);
+    }
+
+    public interface IQualityChangeListener {
+        void onQualityChange(int playbackQuality);
     }
 }
