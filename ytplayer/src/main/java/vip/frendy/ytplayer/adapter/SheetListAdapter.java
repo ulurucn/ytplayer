@@ -49,9 +49,9 @@ public class SheetListAdapter<T> extends Adapter<SheetListAdapter.ViewHolder<T>>
     }
 
     public static class ViewHolder<T> extends RecyclerView.ViewHolder {
-        private IItemClickListener<T> mListener;
-        private TextView mTitle;
-        private PraseHelper<T> mPraseHelper = new PraseHelper<>();
+        protected IItemClickListener<T> mListener;
+        protected TextView mTitle;
+        protected PraseHelper<T> mPraseHelper = new PraseHelper<>();
 
         public ViewHolder(View itemView) {
             super(itemView);
