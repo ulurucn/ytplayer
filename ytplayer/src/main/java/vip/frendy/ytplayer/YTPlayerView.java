@@ -26,7 +26,7 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
 
     protected ImageButton mPlayPause;
     protected PlayerState mState = PlayerState.ENDED;
-    protected enum PlayerState {
+    public enum PlayerState {
         ENDED, PLAYING, PAUSED, BUFFERING, CUED
     };
 
