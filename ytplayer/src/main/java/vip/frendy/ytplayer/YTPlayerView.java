@@ -272,15 +272,15 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
         changeSeekBar(current);
         updatePlayPuaseButton(mState);
 
-        if(mCheckVideoStateListener != null) {
-            HandlerExt.postToUI(new Runnable() {
-                @Override
-                public void run() {
+        HandlerExt.postToUI(new Runnable() {
+            @Override
+            public void run() {
+                if(mCheckVideoStateListener != null) {
                     mCheckVideoStateListener.onResult(mState);
                     mCheckVideoStateListener = null;
                 }
-            });
-        }
+            }
+        });
     }
 
     @Override
