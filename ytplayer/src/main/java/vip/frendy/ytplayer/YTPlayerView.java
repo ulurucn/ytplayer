@@ -272,8 +272,13 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
         updatePlayPuaseButton(mState);
 
         if(mCheckVideoStateListener != null) {
-            mCheckVideoStateListener.onResult(mState);
-            mCheckVideoStateListener = null;
+            HandlerExt.postToUI(new Runnable() {
+                @Override
+                public void run() {
+                    mCheckVideoStateListener.onResult(mState);
+                    mCheckVideoStateListener = null;
+                }
+            });
         }
     }
 
