@@ -1,31 +1,30 @@
 package vip.frendy.ytplayer;
 
-import android.app.Dialog;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
 import vip.frendy.ytplayer.adapter.SheetListAdapter;
-import vip.frendy.ytplayer.utils.DensityUtil;
 
 /**
  * Created by frendy on 2017/11/20.
  */
 
-public class YTPlayerSheetListView<T> extends YTPlayerListView<T> implements SheetListAdapter.IItemClickListener<T> {
+public class YTPlayerSheetListView2<T> extends YTPlayerListView<T> implements SheetListAdapter.IItemClickListener<T> {
     private static String TAG = "YTPlayerSheetListView";
 
-    protected Dialog mBottomSheetDialog;
+    protected BottomSheetDialog mBottomSheetDialog;
     protected RecyclerView mSheetList;
 
     protected ImageButton mBtnList;
@@ -33,15 +32,15 @@ public class YTPlayerSheetListView<T> extends YTPlayerListView<T> implements She
     protected SheetListAdapter.IItemClickListener<T> mSheetItemClickListener;
 
 
-    public YTPlayerSheetListView(Context context) {
+    public YTPlayerSheetListView2(Context context) {
         super(context);
     }
 
-    public YTPlayerSheetListView(Context context, @Nullable AttributeSet attrs) {
+    public YTPlayerSheetListView2(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public YTPlayerSheetListView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public YTPlayerSheetListView2(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -104,11 +103,9 @@ public class YTPlayerSheetListView<T> extends YTPlayerListView<T> implements She
      * 列表
      */
     protected void createBottomSheetDialog(ArrayList<T> list) {
-        mBottomSheetDialog = new Dialog(getContext(), R.style.BottomDialog);
+        mBottomSheetDialog = new BottomSheetDialog(getContext());
         View view = LayoutInflater.from(getContext()).inflate(getLayoutDialogSheetListResId(), null, false);
         mBottomSheetDialog.setContentView(view);
-
-        setBottomDialogBehavior(mBottomSheetDialog, view);
 
         mSheetList = (RecyclerView) view.findViewById(R.id.recyclerView);
         mSheetList.setHasFixedSize(true);
@@ -117,21 +114,30 @@ public class YTPlayerSheetListView<T> extends YTPlayerListView<T> implements She
         mSheetList.setLayoutManager(linearLayoutManager);
         SheetListAdapter adapter = createSheetListAdapter(list);
         mSheetList.setAdapter(adapter);
-    }
 
-    protected void setBottomDialogBehavior(Dialog dialog, View view) {
-        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        layoutParams.width = getResources().getDisplayMetrics().widthPixels;
-        layoutParams.height = DensityUtil.dp2px(getContext(), 360);
-        view.setLayoutParams(layoutParams);
-
-        dialog.getWindow().setGravity(Gravity.BOTTOM);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+        setBehaviorCallback();
     }
 
     protected SheetListAdapter<T> createSheetListAdapter(ArrayList<T> list) {
         return new SheetListAdapter<T>(list, this);
+    }
+
+    protected void setBehaviorCallback() {
+        View view = mBottomSheetDialog.getDelegate().findViewById(android.support.design.R.id.design_bottom_sheet);
+        final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(view);
+        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                    mBottomSheetDialog.dismiss();
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+            }
+        });
     }
 
     @Override
