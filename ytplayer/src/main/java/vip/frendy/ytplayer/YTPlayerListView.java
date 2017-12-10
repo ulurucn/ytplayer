@@ -34,6 +34,7 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
         SINGLE_LOOP
     }
     protected PlayListState mPlayListState = PlayListState.LIST_ORDER;
+    protected IVideoChangedListener mVideoChangedListener;
 
 
     public YTPlayerListView(Context context) {
@@ -156,6 +157,13 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
         return mPraseHelper.getVideoId(video);
     }
 
+    public void playRandomVideo() {
+        mIndex = mPraseHelper.getRandomIndex(mIndex, mVideoList.size());
+        if(mWebView != null && mVideoList.size() <= mIndex) {
+            mWebView.loadVideoById(mPraseHelper.getVideoId(mVideoList.get(mIndex)));
+        }
+    }
+
     public void setPlayListState(PlayListState state) {
         mPlayListState = state;
     }
@@ -175,6 +183,9 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
                         } else {
                             mWebView.cueVideoById(getNextVideoId());
                         }
+                        if(mVideoChangedListener != null) {
+                            mVideoChangedListener.onNextVideo(mVideoList, mIndex);
+                        }
                     }
                 }, 100);
                 break;
@@ -183,6 +194,9 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
                     @Override
                     public void run() {
                         mWebView.loadVideoById(getNextVideoId());
+                        if(mVideoChangedListener != null) {
+                            mVideoChangedListener.onNextVideo(mVideoList, mIndex);
+                        }
                     }
                 }, 100);
                 break;
@@ -190,8 +204,10 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
                 mWebView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mIndex = mPraseHelper.getRandomIndex(mIndex, mVideoList.size());
-                        mWebView.loadVideoById(mPraseHelper.getVideoId(mVideoList.get(mIndex)));
+                        playRandomVideo();
+                        if(mVideoChangedListener != null) {
+                            mVideoChangedListener.onNextVideo(mVideoList, mIndex);
+                        }
                     }
                 }, 100);
                 break;
@@ -200,6 +216,9 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
                     @Override
                     public void run() {
                         mWebView.loadVideoById(mPraseHelper.getVideoId(mVideoList.get(mIndex)));
+                        if(mVideoChangedListener != null) {
+                            mVideoChangedListener.onNextVideo(mVideoList, mIndex);
+                        }
                     }
                 }, 100);
                 break;
@@ -236,5 +255,14 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
     // 查
     public ArrayList<T> queryVideos() {
         return new ArrayList<>();
+    }
+
+
+    public void setVideoChangedListener(IVideoChangedListener<T> listener) {
+        mVideoChangedListener = listener;
+    }
+
+    public interface IVideoChangedListener<T> {
+        void onNextVideo(ArrayList<T> videos, int index);
     }
 }
