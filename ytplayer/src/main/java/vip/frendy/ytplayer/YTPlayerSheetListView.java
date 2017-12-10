@@ -27,6 +27,7 @@ public class YTPlayerSheetListView<T> extends YTPlayerListView<T> implements She
 
     protected Dialog mBottomSheetDialog;
     protected RecyclerView mSheetList;
+    protected View mSheetContentView;
 
     protected ImageButton mBtnList;
 
@@ -105,12 +106,12 @@ public class YTPlayerSheetListView<T> extends YTPlayerListView<T> implements She
      */
     protected void createBottomSheetDialog(ArrayList<T> list) {
         mBottomSheetDialog = new Dialog(getContext(), R.style.BottomDialog);
-        View view = LayoutInflater.from(getContext()).inflate(getLayoutDialogSheetListResId(), null, false);
-        mBottomSheetDialog.setContentView(view);
+        mSheetContentView = LayoutInflater.from(getContext()).inflate(getLayoutDialogSheetListResId(), null, false);
+        mBottomSheetDialog.setContentView(mSheetContentView);
 
-        setBottomDialogBehavior(mBottomSheetDialog, view);
+        setBottomDialogBehavior(mBottomSheetDialog, mSheetContentView);
 
-        mSheetList = (RecyclerView) view.findViewById(R.id.recyclerView);
+        mSheetList = (RecyclerView) mSheetContentView.findViewById(R.id.recyclerView);
         mSheetList.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setSmoothScrollbarEnabled(true);
