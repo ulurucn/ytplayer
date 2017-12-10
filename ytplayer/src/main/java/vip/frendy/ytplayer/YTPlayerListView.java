@@ -159,7 +159,7 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
 
     public void playRandomVideo() {
         mIndex = mPraseHelper.getRandomIndex(mIndex, mVideoList.size());
-        if(mWebView != null && mVideoList.size() <= mIndex) {
+        if(mWebView != null && mVideoList.size() > mIndex) {
             mWebView.loadVideoById(mPraseHelper.getVideoId(mVideoList.get(mIndex)));
         }
     }
