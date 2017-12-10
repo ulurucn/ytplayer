@@ -114,20 +114,20 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
     @Override
     public void onItemClick(View itemView, int position) {
         mIndex = position;
-        mWebView.loadVideoById(getVideoId(position));
+        if(mWebView != null) mWebView.loadVideoById(getVideoId(position));
     }
 
     @Override
     public void onClick(View view) {
         super.onClick(view);
 
-        if(view.getId() == R.id.play_next && mVideoList.size() > 0) {
+        if(view.getId() == R.id.play_next && mVideoList.size() > 0 && mWebView != null) {
             if(isVideoPlaying()) {
                 mWebView.loadVideoById(getNextVideoId());
             } else {
                 mWebView.cueVideoById(getNextVideoId());
             }
-        } else if(view.getId() == R.id.play_prev && mVideoList.size() > 0) {
+        } else if(view.getId() == R.id.play_prev && mVideoList.size() > 0 && mWebView != null) {
             if(isVideoPlaying()) {
                 mWebView.loadVideoById(getPrevVideoId());
             } else {
@@ -163,6 +163,7 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
     @Override
     public void onVideoEnd() {
         super.onVideoEnd();
+        if(mWebView == null) return;
 
         switch (mPlayListState) {
             case LIST_ORDER:

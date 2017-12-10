@@ -80,7 +80,7 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
                 int progress = seekBar.getProgress();
                 double secs = (progress * totalVideoDuration) / 1000;
                 secs = Math.ceil(secs);
-                mWebView.seekVideo(secs);
+                if(mWebView != null) mWebView.seekVideo(secs);
 
                 if(DEBUG) Log.d(TAG, "onStopTrackingTouch :: progress = " + progress +  "-- secs = " + secs);
             }
@@ -113,37 +113,37 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
     }
 
     public void loadDefault() {
-        mWebView.loadDefault(mVideoId);
+        if(mWebView != null) mWebView.loadDefault(mVideoId);
     }
 
     public void loadVideoById(String id) {
         mVideoId = id;
-        mWebView.loadVideoById(mVideoId);
+        if(mWebView != null) mWebView.loadVideoById(mVideoId);
     }
 
     public void cueVideoById(String id) {
         mVideoId = id;
-        mWebView.cueVideoById(id);
+        if(mWebView != null) mWebView.cueVideoById(id);
     }
 
     public void stopVideo() {
-        mWebView.stopVideo();
+        if(mWebView != null) mWebView.stopVideo();
     }
 
     public void clearVideo() {
-        mWebView.clearVideo();
+        if(mWebView != null) mWebView.clearVideo();
     }
 
     public void pauseVideo() {
-        mWebView.pauseVideo();
+        if(mWebView != null) mWebView.pauseVideo();
     }
 
     public void playVideo() {
-        mWebView.playVideo();
+        if(mWebView != null) mWebView.playVideo();
     }
 
     public void setSize(int w, int h) {
-        mWebView.setSize(w, h);
+        if(mWebView != null) mWebView.setSize(w, h);
     }
 
     // 展开
@@ -165,7 +165,7 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
 
     public void setProceedTouchEvent(boolean enable) {
         isProceedTouchEvent = enable;
-        mWebView.setProceedTouchEvent(enable);
+        if(mWebView != null) mWebView.setProceedTouchEvent(enable);
     }
 
     @Override
