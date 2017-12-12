@@ -43,7 +43,7 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
 
     protected ICheckVideoStateListener mCheckVideoStateListener;
     protected IQualityChangeListener mQualityChangeListener;
-
+    protected SeekBar.OnSeekBarChangeListener mSeekBarChangeListener;
 
     public YTPlayerView(Context context) {
         super(context);
@@ -82,17 +82,24 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
                 secs = Math.ceil(secs);
                 if(mWebView != null) mWebView.seekVideo(secs);
 
+                if(mSeekBarChangeListener != null)
+                    mSeekBarChangeListener.onStopTrackingTouch(seekBar);
+
                 if(DEBUG) Log.d(TAG, "onStopTrackingTouch :: progress = " + progress +  "-- secs = " + secs);
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
+                if(mSeekBarChangeListener != null)
+                    mSeekBarChangeListener.onStartTrackingTouch(seekBar);
+
                 if(DEBUG) Log.d(TAG, "onStartTrackingTouch :: progress = " + seekBar.getProgress() );
             }
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+                if(mSeekBarChangeListener != null)
+                    mSeekBarChangeListener.onProgressChanged(seekBar, progress, fromUser);
             }
         });
 
@@ -353,6 +360,10 @@ public class YTPlayerView<T> extends LinearLayout implements IYTJSListener, View
                 mWebView.playVideo();
             }
         }
+    }
+
+    public void setSeekBarChangeListener(SeekBar.OnSeekBarChangeListener listener) {
+        this.mSeekBarChangeListener = listener;
     }
 
     public void setQualityChangeListener(IQualityChangeListener listener) {

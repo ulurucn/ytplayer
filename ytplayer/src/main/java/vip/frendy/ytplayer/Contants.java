@@ -5,6 +5,6 @@ package vip.frendy.ytplayer;
  */
 
 public class Contants {
-    public static boolean DEBUG = true;
+    public static boolean DEBUG = false;
 
 }
