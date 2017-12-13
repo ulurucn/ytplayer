@@ -135,6 +135,10 @@ public class YTWebView extends WebView {
         loadUrl("javascript:setSize(" + w + "," + h + ")");
     }
 
+    public void setPlaybackQuality(String quality) {
+        loadUrl("javascript:setPlaybackQuality('"+ quality +"')");
+    }
+
     /**
      * Playlist
      */
