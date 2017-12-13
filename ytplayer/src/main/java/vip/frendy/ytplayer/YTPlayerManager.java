@@ -2,6 +2,9 @@ package vip.frendy.ytplayer;
 
 import android.content.Context;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import vip.frendy.ytplayer.interfaces.IYTJSListener;
 import vip.frendy.ytplayer.interfaces.IYTWebViewListener;
 
@@ -25,6 +28,7 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
     private boolean hasLoadDefault = false;
     private IYTJSListener mClientListener;
     private IYTJSListener mManagerListener;
+    private HashMap<String, IYTJSListener> mOtherListeners = new HashMap<>();
 
     public void init(Context context) {
         mWebView = new YTWebView(context);
@@ -62,12 +66,26 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
         mManagerListener = null;
     }
 
+    public void addOtherListener(String tag, IYTJSListener listener) {
+        mOtherListeners.put(tag, listener);
+    }
+
+    public void removeOtherListener(String tag) {
+        mOtherListeners.remove(tag);
+    }
+
     @Override
     public void onYouTubeIframeAPIReady() {
         if(mClientListener != null)
             mClientListener.onYouTubeIframeAPIReady();
         if(mManagerListener != null)
             mManagerListener.onYouTubeIframeAPIReady();
+        if(mOtherListeners != null && !mOtherListeners.isEmpty()) {
+            for (Map.Entry<String, IYTJSListener> entry : mOtherListeners.entrySet()) {
+                IYTJSListener listener = entry.getValue();
+                listener.onYouTubeIframeAPIReady();
+            }
+        }
     }
 
     @Override
@@ -76,6 +94,12 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
             mClientListener.updateVideoDuration(duration);
         if(mManagerListener != null)
             mManagerListener.updateVideoDuration(duration);
+        if(mOtherListeners != null && !mOtherListeners.isEmpty()) {
+            for (Map.Entry<String, IYTJSListener> entry : mOtherListeners.entrySet()) {
+                IYTJSListener listener = entry.getValue();
+                listener.updateVideoDuration(duration);
+            }
+        }
     }
 
     @Override
@@ -84,6 +108,12 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
             mClientListener.updateTotalVideoDuration(duration);
         if(mManagerListener != null)
             mManagerListener.updateTotalVideoDuration(duration);
+        if(mOtherListeners != null && !mOtherListeners.isEmpty()) {
+            for (Map.Entry<String, IYTJSListener> entry : mOtherListeners.entrySet()) {
+                IYTJSListener listener = entry.getValue();
+                listener.updateTotalVideoDuration(duration);
+            }
+        }
     }
 
     @Override
@@ -92,6 +122,12 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
             mClientListener.onReady();
         if(mManagerListener != null)
             mManagerListener.onReady();
+        if(mOtherListeners != null && !mOtherListeners.isEmpty()) {
+            for (Map.Entry<String, IYTJSListener> entry : mOtherListeners.entrySet()) {
+                IYTJSListener listener = entry.getValue();
+                listener.onReady();
+            }
+        }
     }
 
     @Override
@@ -100,6 +136,12 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
             mClientListener.onVideoUnStarted();
         if(mManagerListener != null)
             mManagerListener.onVideoUnStarted();
+        if(mOtherListeners != null && !mOtherListeners.isEmpty()) {
+            for (Map.Entry<String, IYTJSListener> entry : mOtherListeners.entrySet()) {
+                IYTJSListener listener = entry.getValue();
+                listener.onVideoUnStarted();
+            }
+        }
     }
 
     @Override
@@ -108,6 +150,12 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
             mClientListener.onVideoEnd();
         if(mManagerListener != null)
             mManagerListener.onVideoEnd();
+        if(mOtherListeners != null && !mOtherListeners.isEmpty()) {
+            for (Map.Entry<String, IYTJSListener> entry : mOtherListeners.entrySet()) {
+                IYTJSListener listener = entry.getValue();
+                listener.onVideoEnd();
+            }
+        }
     }
 
     @Override
@@ -116,6 +164,12 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
             mClientListener.onVideoPlaying();
         if(mManagerListener != null)
             mManagerListener.onVideoPlaying();
+        if(mOtherListeners != null && !mOtherListeners.isEmpty()) {
+            for (Map.Entry<String, IYTJSListener> entry : mOtherListeners.entrySet()) {
+                IYTJSListener listener = entry.getValue();
+                listener.onVideoPlaying();
+            }
+        }
     }
 
     @Override
@@ -124,6 +178,12 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
             mClientListener.onVideoPaused();
         if(mManagerListener != null)
             mManagerListener.onVideoPaused();
+        if(mOtherListeners != null && !mOtherListeners.isEmpty()) {
+            for (Map.Entry<String, IYTJSListener> entry : mOtherListeners.entrySet()) {
+                IYTJSListener listener = entry.getValue();
+                listener.onVideoPaused();
+            }
+        }
     }
 
     @Override
@@ -132,6 +192,12 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
             mClientListener.onVideoBuffering();
         if(mManagerListener != null)
             mManagerListener.onVideoBuffering();
+        if(mOtherListeners != null && !mOtherListeners.isEmpty()) {
+            for (Map.Entry<String, IYTJSListener> entry : mOtherListeners.entrySet()) {
+                IYTJSListener listener = entry.getValue();
+                listener.onVideoBuffering();
+            }
+        }
     }
 
     @Override
@@ -140,6 +206,12 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
             mClientListener.onVideoCued();
         if(mManagerListener != null)
             mManagerListener.onVideoCued();
+        if(mOtherListeners != null && !mOtherListeners.isEmpty()) {
+            for (Map.Entry<String, IYTJSListener> entry : mOtherListeners.entrySet()) {
+                IYTJSListener listener = entry.getValue();
+                listener.onVideoCued();
+            }
+        }
     }
 
     @Override
@@ -148,6 +220,12 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
             mClientListener.onVideoStateCheckResult(state, current, total);
         if(mManagerListener != null)
             mManagerListener.onVideoStateCheckResult(state, current, total);
+        if(mOtherListeners != null && !mOtherListeners.isEmpty()) {
+            for (Map.Entry<String, IYTJSListener> entry : mOtherListeners.entrySet()) {
+                IYTJSListener listener = entry.getValue();
+                listener.onVideoStateCheckResult(state, current, total);
+            }
+        }
     }
 
     @Override
@@ -156,6 +234,12 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
             mClientListener.onApiChange();
         if(mManagerListener != null)
             mManagerListener.onApiChange();
+        if(mOtherListeners != null && !mOtherListeners.isEmpty()) {
+            for (Map.Entry<String, IYTJSListener> entry : mOtherListeners.entrySet()) {
+                IYTJSListener listener = entry.getValue();
+                listener.onApiChange();
+            }
+        }
     }
 
     @Override
@@ -164,6 +248,12 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
             mClientListener.onError(error);
         if(mManagerListener != null)
             mManagerListener.onError(error);
+        if(mOtherListeners != null && !mOtherListeners.isEmpty()) {
+            for (Map.Entry<String, IYTJSListener> entry : mOtherListeners.entrySet()) {
+                IYTJSListener listener = entry.getValue();
+                listener.onError(error);
+            }
+        }
     }
 
     @Override
@@ -172,6 +262,12 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
             mClientListener.onPlaybackRateChange(rate);
         if(mManagerListener != null)
             mManagerListener.onPlaybackRateChange(rate);
+        if(mOtherListeners != null && !mOtherListeners.isEmpty()) {
+            for (Map.Entry<String, IYTJSListener> entry : mOtherListeners.entrySet()) {
+                IYTJSListener listener = entry.getValue();
+                listener.onPlaybackRateChange(rate);
+            }
+        }
     }
 
     @Override
@@ -180,5 +276,11 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
             mClientListener.onPlaybackQualityChange(playbackQuality);
         if(mManagerListener != null)
             mManagerListener.onPlaybackQualityChange(playbackQuality);
+        if(mOtherListeners != null && !mOtherListeners.isEmpty()) {
+            for (Map.Entry<String, IYTJSListener> entry : mOtherListeners.entrySet()) {
+                IYTJSListener listener = entry.getValue();
+                listener.onPlaybackQualityChange(playbackQuality);
+            }
+        }
     }
 }
