@@ -185,9 +185,9 @@
 			player.clearVideo();
 		}
 
-        function loadVideo(videoId, startSeconds) {
-        	console.log("[JS] Loading video: " +videoId + " - " + startSeconds);
-            player.loadVideoById(videoId, startSeconds);
+        function loadVideo(videoId, startSeconds, desiredQuality) {
+            console.log("[JS] Loading video: " +videoId + " - " + startSeconds + "-" + desiredQuality);
+            player.loadVideoById(videoId, startSeconds, desiredQuality);
         }
 
         function cueVideo(videoId, startSeconds) {

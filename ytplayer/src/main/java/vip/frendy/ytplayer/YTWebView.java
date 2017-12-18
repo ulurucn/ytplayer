@@ -39,6 +39,7 @@ public class YTWebView extends WebView {
 
     private Context mContext;
     protected boolean isProceedTouchEvent = false;
+    protected String mDesiredQuality = "hd720";
 
     private IYTWebViewListener mListener;
 
@@ -91,7 +92,7 @@ public class YTWebView extends WebView {
         if(!BASEURL_VERSION) {
             loadUrl("javascript:loadVideoById('" + id + "')");
         } else {
-            loadUrl("javascript:loadVideo('" + id +"', " + 0 +")");
+            loadUrl("javascript:loadVideo('" + id +"', " + 0 +", '" + mDesiredQuality + "')");
         }
     }
 
@@ -137,6 +138,10 @@ public class YTWebView extends WebView {
 
     public void setPlaybackQuality(String quality) {
         loadUrl("javascript:setPlaybackQuality('"+ quality +"')");
+    }
+
+    public void setDesiredQuality(String quality) {
+        mDesiredQuality = quality;
     }
 
     /**
