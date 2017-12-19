@@ -61,6 +61,9 @@ public class YTWebView extends WebView {
     public void init(IYTJSListener listener) {
         WebSettings settings = getSettings();
         settings.setJavaScriptEnabled(true);
+        if(Build.VERSION.SDK_INT >= 17) {
+            settings.setMediaPlaybackRequiresUserGesture(false);
+        }
 
         setWebChromeClient(new YTChromwClient());
         setWebViewClient(new YTWebviewClient());
