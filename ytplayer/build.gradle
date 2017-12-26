@@ -43,39 +43,39 @@ dependencies {
 
 
 //maven
-def libraryGroupId = 'com.cootek.ytplayer'
-def libraryArtifactId = 'ytplayer'
-def libraryVersion = '0.5.6'
-
-publishing {
-    publications {
-        aar(MavenPublication) {
-            groupId libraryGroupId
-            version libraryVersion
-            artifactId libraryArtifactId
-
-            artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
-        }
-    }
-}
-
-artifactory {
-    contextUrl = 'https://maven.cootekservice.com/artifactory'
-    publish {
-        repository {
-            repoKey = 'libs-release-local'
-
-            username = "${artifactory_user}"
-            password = "${artifactory_password}"
-        }
-        defaults {
-            publications('aar')
-            publishArtifacts = true
-
-            properties = ['qa.level': 'basic', 'q.os': 'android', 'dev.team': 'core']
-            publishPom = true
-        }
-    }
-}
+//def libraryGroupId = 'com.cootek.ytplayer'
+//def libraryArtifactId = 'ytplayer'
+//def libraryVersion = '0.5.6'
+//
+//publishing {
+//    publications {
+//        aar(MavenPublication) {
+//            groupId libraryGroupId
+//            version libraryVersion
+//            artifactId libraryArtifactId
+//
+//            artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
+//        }
+//    }
+//}
+//
+//artifactory {
+//    contextUrl = 'https://maven.cootekservice.com/artifactory'
+//    publish {
+//        repository {
+//            repoKey = 'libs-release-local'
+//
+//            username = "${artifactory_user}"
+//            password = "${artifactory_password}"
+//        }
+//        defaults {
+//            publications('aar')
+//            publishArtifacts = true
+//
+//            properties = ['qa.level': 'basic', 'q.os': 'android', 'dev.team': 'core']
+//            publishPom = true
+//        }
+//    }
+//}
 
 //./gradlew assembleRelease artifactoryPublish
