@@ -19,9 +19,10 @@ public class Playlist implements Serializable {
 
     private String kind;
     private String etag;
-    private String nextPageToken;
+    private String nextPageToken = "";
     private PageInfoBean pageInfo;
     private ArrayList<PlaylistItems> items;
+    private int type = 0;
 
     public String getKind() {
         return kind;
@@ -61,6 +62,14 @@ public class Playlist implements Serializable {
 
     public void setItems(ArrayList<PlaylistItems> items) {
         this.items = items;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public static class PageInfoBean implements Serializable {
