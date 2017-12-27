@@ -121,7 +121,7 @@ public class PlaylistItems implements Serializable {
         private String publishedAt;
         private String channelId;
         private String title;
-        private String description;
+//        private String description;
         private ThumbnailsBean thumbnails;
         private String channelTitle;
         private String playlistId;
@@ -152,13 +152,13 @@ public class PlaylistItems implements Serializable {
             this.title = title;
         }
 
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
+//        public String getDescription() {
+//            return description;
+//        }
+//
+//        public void setDescription(String description) {
+//            this.description = description;
+//        }
 
         public ThumbnailsBean getThumbnails() {
             return thumbnails;
@@ -240,6 +240,9 @@ public class PlaylistItems implements Serializable {
             }
 
             public StandardBean getStandard() {
+                if(standard != null && standard.getUrl() == null) {
+                    if(high != null) standard.setUrl(high.getUrl());
+                }
                 return standard;
             }
 
