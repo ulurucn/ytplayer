@@ -24,6 +24,11 @@ public class Playlist implements Serializable {
     private ArrayList<PlaylistItems> items;
     private int type = 0;
 
+    /**
+     * error : {"errors":[{"domain":"youtube.playlistItem","reason":"playlistNotFound","message":"The playlist identified with the requests <code>playlistId<\/code> parameter cannot be found.","locationType":"parameter","location":"playlistId"}],"code":404,"message":"The playlist identified with the requests <code>playlistId<\/code> parameter cannot be found."}
+     */
+    private ErrorBean error;
+
     public String getKind() {
         return kind;
     }
@@ -72,6 +77,14 @@ public class Playlist implements Serializable {
         this.type = type;
     }
 
+    public ErrorBean getError() {
+        return error;
+    }
+
+    public void setError(ErrorBean error) {
+        this.error = error;
+    }
+
     public static class PageInfoBean implements Serializable {
         /**
          * totalResults : 200
@@ -95,6 +108,33 @@ public class Playlist implements Serializable {
 
         public void setResultsPerPage(int resultsPerPage) {
             this.resultsPerPage = resultsPerPage;
+        }
+    }
+
+
+    public static class ErrorBean {
+        /**
+         * errors : [{"domain":"youtube.playlistItem","reason":"playlistNotFound","message":"The playlist identified with the requests <code>playlistId<\/code> parameter cannot be found.","locationType":"parameter","location":"playlistId"}]
+         * code : 404
+         * message : The playlist identified with the requests <code>playlistId</code> parameter cannot be found.
+         */
+        private int code;
+        private String message;
+
+        public int getCode() {
+            return code;
+        }
+
+        public void setCode(int code) {
+            this.code = code;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
         }
     }
 }
