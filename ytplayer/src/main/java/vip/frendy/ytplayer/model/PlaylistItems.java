@@ -258,8 +258,13 @@ public class PlaylistItems implements Serializable {
             }
 
             public StandardBean getStandard() {
-                if(standard != null && standard.getUrl() == null) {
-                    if(high != null) standard.setUrl(high.getUrl());
+                if(standard == null || standard.getUrl() == null) {
+                    if(high != null && high.getUrl() != null) {
+                        standard = new StandardBean();
+                        standard.setUrl(high.getUrl());
+                        standard.setHeight(high.getHeight());
+                        standard.setWidth(high.getWidth());
+                    }
                 }
                 return standard;
             }
