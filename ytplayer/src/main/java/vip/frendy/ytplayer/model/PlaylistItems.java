@@ -79,6 +79,9 @@ public class PlaylistItems implements Serializable {
 
     private int state = 0;
 
+    //-1为非广告，其它为广告
+    private int ad_type = -1;
+
     public void setTimestamp(long stamp) {
         this.timestamp = stamp;
     }
@@ -121,6 +124,18 @@ public class PlaylistItems implements Serializable {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public void setAdType(int type) {
+        this.ad_type = type;
+    }
+
+    public int getAdType() {
+        return ad_type;
+    }
+
+    public boolean isAd() {
+        return ad_type != -1;
     }
 
     public static class SnippetBean implements Serializable {
