@@ -67,7 +67,7 @@ public class PlaylistItems implements Serializable {
     private static final String COL_TIME = "_time";
 
     private String kind;
-    private String etag;
+//    private String etag;
 
     @PrimaryKey(AssignType.BY_MYSELF)
     private String id;
@@ -94,13 +94,13 @@ public class PlaylistItems implements Serializable {
         this.kind = kind;
     }
 
-    public String getEtag() {
-        return etag;
-    }
-
-    public void setEtag(String etag) {
-        this.etag = etag;
-    }
+//    public String getEtag() {
+//        return etag;
+//    }
+//
+//    public void setEtag(String etag) {
+//        this.etag = etag;
+//    }
 
     public String getId() {
         return id;

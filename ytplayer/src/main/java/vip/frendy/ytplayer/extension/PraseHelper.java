@@ -35,6 +35,8 @@ public class PraseHelper<T> {
         Random random = new Random();
         int ret = 0;
 
+        if(bound <= 0) return 0;
+
         while (!isDiff) {
             ret = random.nextInt(bound);
 
