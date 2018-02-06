@@ -58,7 +58,7 @@ public class YoutubePlayerActivity extends Activity {
         mPlayerView.setProceedTouchEvent(true);
         mPlayerView.setVideoList(mVideoIds);
         mPlayerView.playVideoListAt(4);
-        mPlayerView.setPlayListState(YTPlayerListView.PlayListState.SINGLE_LOOP);
+        mPlayerView.setPlayListState(YTPlayerListView.PlayListState.LIST_LOOP);
 
         findViewById(R.id.roll).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -27,6 +27,9 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
     protected int mIndex = 0;
     protected PraseHelper<T> mPraseHelper = new PraseHelper<>();
 
+    //容器标志，容器在播放结束时不需要回调，避免与主播放器重复调用
+    protected boolean isContainer = false;
+
     public enum PlayListState {
         LIST_ORDER,
         LIST_LOOP,
@@ -171,7 +174,7 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
     @Override
     public void onVideoEnd() {
         super.onVideoEnd();
-        if(mWebView == null) return;
+        if(mWebView == null || isContainer) return;
 
         switch (mPlayListState) {
             case LIST_ORDER:
@@ -225,6 +228,10 @@ public class YTPlayerListView<T> extends YTPlayerView<T> implements SwipeItemCli
             default:
                 break;
         }
+    }
+
+    public void setContainer(boolean isContainer) {
+        this.isContainer = isContainer;
     }
 
     // 增
