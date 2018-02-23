@@ -29,6 +29,7 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
     private IYTJSListener mClientListener;
     private IYTJSListener mManagerListener;
     private HashMap<String, IYTJSListener> mOtherListeners = new HashMap<>();
+    private float mCurrentTime = 0f, mTotalTime = 0f;
 
     public void init(Context context) {
         mWebView = new YTWebView(context);
@@ -90,6 +91,8 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
 
     @Override
     public void updateVideoDuration(float duration) {
+        mCurrentTime = duration;
+
         if(mClientListener != null)
             mClientListener.updateVideoDuration(duration);
         if(mManagerListener != null)
@@ -104,6 +107,8 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
 
     @Override
     public void updateTotalVideoDuration(float duration) {
+        mTotalTime = duration;
+
         if(mClientListener != null)
             mClientListener.updateTotalVideoDuration(duration);
         if(mManagerListener != null)
@@ -282,5 +287,13 @@ public class YTPlayerManager implements IYTJSListener, IYTWebViewListener {
                 listener.onPlaybackQualityChange(playbackQuality);
             }
         }
+    }
+
+    public float getCurrentTime() {
+        return mCurrentTime;
+    }
+
+    public float getTotalTime() {
+        return mTotalTime;
     }
 }
