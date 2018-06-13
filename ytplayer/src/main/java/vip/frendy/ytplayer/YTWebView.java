@@ -23,6 +23,7 @@ import java.util.Map;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import vip.frendy.ytplayer.interfaces.IYTLinkClickListner;
 import vip.frendy.ytplayer.interfaces.IYTJSListener;
 import vip.frendy.ytplayer.interfaces.IYTWebViewListener;
 import vip.frendy.ytplayer.utils.PlayerUtils;
@@ -42,6 +43,7 @@ public class YTWebView extends WebView {
     protected String mDesiredQuality = "hd720";
 
     private IYTWebViewListener mListener;
+    private IYTLinkClickListner mLinkListener;
 
     public YTWebView(Context context) {
         super(context);
@@ -79,6 +81,10 @@ public class YTWebView extends WebView {
 
     public void setWebViewListener(IYTWebViewListener listener) {
         mListener = listener;
+    }
+
+    public void setLinkClickListener(IYTLinkClickListner listener) {
+        mLinkListener = listener;
     }
 
     /**
@@ -212,6 +218,7 @@ public class YTWebView extends WebView {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             if(DEBUG) Log.d(TAG, "shouldOverrideUrlLoading : url = " + url);
+            if(mLinkListener != null) mLinkListener.onYTLinkClicked(url);
             return true;
         }
 
