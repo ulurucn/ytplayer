@@ -93,6 +93,7 @@ public class YTPlayerSheetListView<T> extends YTPlayerListView<T> implements She
         super.onClick(view);
 
         if(view.getId() == R.id.sheet_list) {
+            if(mBottomSheetDialog == null) return;
             if (mBottomSheetDialog.isShowing()) {
                 mBottomSheetDialog.dismiss();
             } else {
